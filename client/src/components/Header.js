@@ -33,7 +33,7 @@ class Header extends React.Component {
             <h1>반려동물 사업장</h1>
             <nav>
               <button onClick={this.handle_thememode} id="darkmode_btn">{this.state.btn_name}</button>
-              <a href="https://github.com/good-jinu/which_trip_do_you_want" target="_blank" rel="noopener noreferrer">
+              <a href="https://github.com/good-jinu/petmily" target="_blank" rel="noopener noreferrer">
                 <img src="/GitHub-Mark-32px.png" className="mark" alt="github"/>
               </a>
             </nav>

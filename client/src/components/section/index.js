@@ -1,2 +1,2 @@
-export { default as ChatBot } from './ChatBot';
+export { default as MapArticle } from './MapArticle';
 export { default as TipExplainer } from './TipExplainer';
