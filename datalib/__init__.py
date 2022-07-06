@@ -1,2 +1,1 @@
-from . import petfacility
-from . import petasign
+from . import readhospital

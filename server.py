@@ -1,7 +1,13 @@
 from flask import Flask, request, make_response, jsonify
 import os
+from datalib import readhospital
 
 app = Flask(__name__, static_url_path='/', static_folder='build')
+
+@app.route('/coordinates', methods=['GET'])
+def res_xylist():
+    d = readhospital.getxylist().tolist()[:210]
+    return jsonify(d)
 
 @app.route('/')
 def index_html(): # 루트에서는 index.html을 response로 보냄
