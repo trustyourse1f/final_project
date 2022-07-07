@@ -17,25 +17,3 @@
     background-color: #0a0a0a;
     color: #ececec;
 }
-
-@media screen and (max-width: 480px) {
-    #section > nav {
-        display: none;
-    }
-    #section > article {
-        padding: 0.5em;
-        width: 100%;
-    }
-}
-
-@media screen and (min-width: 480px) {
-    #section > nav {
-        padding: 0.5em;
-        width: 30%;
-    }
-    
-    #section > article {
-        padding: 0.5em;
-        width: 70%;
-    }
-}

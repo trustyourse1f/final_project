@@ -6,7 +6,7 @@ import { get_coordinates } from 'jslib/request/coordinate';
 function MapArticle(props) {
 
     useEffect(() => {
-        create_kakao_map('map', 37.5675, 126.98, 11);
+        create_kakao_map('map', 37.5675, 126.98, 9);
         get_coordinates(tm_to_wsg);
     }, []);
         

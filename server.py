@@ -6,8 +6,10 @@ app = Flask(__name__, static_url_path='/', static_folder='build')
 
 @app.route('/coordinates', methods=['GET'])
 def res_xylist():
-    d = readhospital.getxylist().tolist()[:210]
-    return jsonify(d)
+    coordinate_list=readhospital.getxylist().tolist()
+    return jsonify(coordinate_list)
+
+
 
 @app.route('/')
 def index_html(): # 루트에서는 index.html을 response로 보냄

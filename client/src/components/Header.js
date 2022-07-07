@@ -30,7 +30,7 @@ class Header extends React.Component {
   render() {
     return (
         <header id="header">
-            <h1>반려동물 사업장</h1>
+            <h1>동물병원 예약시스템</h1>
             <nav>
               <button onClick={this.handle_thememode} id="darkmode_btn">{this.state.btn_name}</button>
               <a href="https://github.com/good-jinu/petmily" target="_blank" rel="noopener noreferrer">
