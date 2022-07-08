@@ -1,11 +1,10 @@
 from flask import Flask, request, make_response, jsonify
 import os
-from sympy import re
 from datalib import readhospital
 
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
-@app.route('/makerinfo', methods=['GET'])
+@app.route('/markerinfo', methods=['GET'])
 def res_xylist():
     x=readhospital.getxylist()
     return jsonify(x)

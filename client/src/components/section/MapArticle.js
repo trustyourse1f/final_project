@@ -1,14 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MapArticle.css';
-import { create_kakao_map, tm_to_wsg } from 'jslib/kakaomap';
-import { get_coordinates } from 'jslib/request/coordinate';
+import KakaoMap from 'jslib/kakaomap';
+import { get_markerinfo } from 'jslib/request/markerinfo';
 
 function MapArticle(props) {
+    const [kmap, setKmap] = useState(null);
 
     useEffect(() => {
-        create_kakao_map('map', 37.5675, 126.98, 9);
-        get_coordinates(tm_to_wsg);
+        setKmap(new KakaoMap('map'));
     }, []);
+
+    useEffect(() => {
+        if(kmap !== null) {
+            get_markerinfo(kmap);
+        }
+    },[kmap]);
         
     return (
         <>
