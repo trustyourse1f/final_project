@@ -1,13 +1,14 @@
 from flask import Flask, request, make_response, jsonify
 import os
+from sympy import re
 from datalib import readhospital
 
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
-@app.route('/coordinates', methods=['GET'])
+@app.route('/makerinfo', methods=['GET'])
 def res_xylist():
-    coordinate_list=readhospital.getxylist().tolist()
-    return jsonify(coordinate_list)
+    x=readhospital.getxylist()
+    return jsonify(x)
 
 
 
