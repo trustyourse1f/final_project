@@ -6,7 +6,7 @@ app = Flask(__name__, static_url_path='/', static_folder='build')
 
 @app.route('/markerinfo', methods=['GET'])
 def res_xylist():
-    x=readhospital.getxylist()
+    x=readhospital.getlist()
     return jsonify(x)
 
 
