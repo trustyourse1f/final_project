@@ -1,12 +1,11 @@
 from flask import Flask, request, make_response, jsonify
 import os
-from datalib import readhospital
-
+from datalib import db_readhospital
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
 @app.route('/markerinfo', methods=['GET'])
 def res_xylist():
-    x=readhospital.getlist()
+    x=db_readhospital.db_to_flask('','petmily_db')
     return jsonify(x)
 
 

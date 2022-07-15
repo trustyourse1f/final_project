@@ -1,1 +1,1 @@
-from . import readhospital
+from . import db_readhospital
