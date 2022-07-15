@@ -3,6 +3,7 @@ import './MapArticle.css';
 import KakaoMap from 'jslib/kakaomap';
 import { useSelector, useDispatch } from 'react-redux';
 import { setHospitals } from 'reduxapp/feature/hospitals';
+import { setInfo } from 'reduxapp/feature/selected_info';
 import axios from 'axios';
 
 
@@ -19,15 +20,18 @@ function MapArticle(props) {
         .then(res => {
             dispatch(setHospitals(res.data));
             let tmp_map = new KakaoMap('map');
-            for(let i=0; i<100; i++)
+            for(let i=0; i<res.data.length; i++)
             {
                 let mk = tmp_map.add_marker(res.data[i].latitude, res.data[i].longitude, true);
                 tmp_map.deploymarker(mk);
-                let infowindow = `<div style="background-color:#1e1e00;color:#e2e2c9">
-                                    ${res.data[i].name}<br/>
-                                    ${res.data[i].contract}<br/>
-                                    ${res.data[i].address}</div>`;
-                tmp_map.setInfoWindow(mk, infowindow);
+                let infowindow = `<div class="infowin" id="h${i}">
+                                    <h1>${res.data[i].name}</h1>
+                                    <div class="infowindesc">${res.data[i].contract}<br/>
+                                    ${res.data[i].address}</div>
+                                    <button>예약하기</button></div>`;
+                tmp_map.setInfoWindow(mk, infowindow, i, () => {
+                    dispatch(setInfo(res.data[i]));
+                });
             }
             setKmap(tmp_map);
         })

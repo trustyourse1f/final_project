@@ -39,7 +39,7 @@ class KakaoMap {
         });
     }
 
-    setInfoWindow(marker, iwContent = '<div></div>') {
+    setInfoWindow(marker, iwContent = '<div></div>', h_id=0, reserve_cbk) {
         // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
         // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
@@ -53,6 +53,8 @@ class KakaoMap {
         kakao.maps.event.addListener(marker, 'click', () => {
         // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
             infowindow.open(this.map, marker);
+            let emt = document.querySelector(`#h${h_id} button`);
+            emt.addEventListener("click", reserve_cbk);
         });
     }
 

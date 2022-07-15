@@ -14,7 +14,24 @@
 
 @media screen and (min-width: 900px){
     #map {
-        width: 800px;
+        width: 900px;
         min-height: 70vh;
     }
+}
+
+.infowin {
+    width: 100%;
+    background-color: #14130f;
+    color: #ffffe3;
+}
+
+.infowin h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+}
+
+.infowindesc {
+    margin: 0;
+    font-size: 8px;
 }
