@@ -12,8 +12,8 @@ CREATE TABLE hospital_info(
         isStore TINYINT(1),
         hasParkingLot TINYINT(1),
         businessHours VARCHAR(255),
-        latitude FLOAT(15),
-        longitude FLOAT(15),
+        latitude DOUBLE(28, 25),
+        longitude DOUBLE(28, 25),
         address VARCHAR(255),
         subject VARCHAR(255),
         species VARCHAR(255)
@@ -26,7 +26,7 @@ CREATE TABLE reservation(
         Customer_number VARCHAR(255),
         AnimalType VARCHAR(31),
         Symptom VARCHAR(255),
-        Time TIMESTAMP,
+        Time CHAR(5),
         FOREIGN KEY(Hospital_ID) REFERENCES hospital_info(HospitalID)
 );
 
@@ -50,6 +50,28 @@ CREATE TABLE disease_info(
 DROP TABLE IF EXISTS gu_info;
 CREATE TABLE gu_info(
 		gu VARCHAR(125),
-        hospital_number TINYINT(15),
-        hospital_number_is24 TINYINT(15)
+        Hospital TINYINT(15),
+        Is24 TINYINT(15)
+);
+
+DROP TABLE IF EXISTS start_end;
+CREATE TABLE start_end(
+		name VARCHAR(255),
+        mon_start VARCHAR(255),
+        tue_start VARCHAR(255),
+        wed_start VARCHAR(255),
+        thu_start VARCHAR(255),
+        fri_start VARCHAR(255),
+        sat_start VARCHAR(255),
+        sun_start VARCHAR(255),
+        hol_start VARCHAR(255),
+        mon_end VARCHAR(255),
+        tue_end VARCHAR(255),
+        wed_end VARCHAR(255),
+        thu_end VARCHAR(255),
+        fri_end VARCHAR(255),
+        sat_end VARCHAR(255),
+        sun_end VARCHAR(255),
+        hol_end VARCHAR(255),
+        businessHours VARCHAR(255)
 );

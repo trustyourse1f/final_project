@@ -1,7 +1,7 @@
 import pymysql
 import pandas as pd
-def db_to_flask(pw,dbname):
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd=f'{pw}', db=f'{dbname}', charset='utf8')
+
+def db_to_flask(db):
     query = "SELECT * FROM hospital_info"
     result=[]
     c1=db.cursor()
