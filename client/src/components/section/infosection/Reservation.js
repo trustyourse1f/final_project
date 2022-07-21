@@ -1,9 +1,15 @@
-import { post_reservation } from 'jslib/reservation_api';
+import { useEffect } from 'react';
+import { post_reservation, get_buisnesshour } from 'jslib/reservation_api';
 
 function Reservation(props) {
     let hname = null;
     let reserveContainer = [];
     hname = props.name;
+
+    useEffect(() => {
+        get_buisnesshour(props.HospitalID);
+    }, [])
+
     for(let i=9; i<18; i++)
     {
         let clickbtn = (e) => {
