@@ -2,12 +2,12 @@ import pymysql
 import csv
 import pandas as pd
 
-hostname = 'localhost'
+hostname = ''
 portnum = 3306
-pswd = '48615+'
+pswd = ''
 
 ###petraschu
-conn = pymysql.connect(host = hostname, port = portnum, user='root',password='pswd',db='petmily_db',charset='utf8')
+conn = pymysql.connect(host = hostname, port = portnum, user='root',password=pswd, db='petmily_db',charset='utf8')
 curs = conn.cursor()
 sql = "insert into hospital_info (HospitalID, name, contract, is24, isBeautyParlor, isHotel, isStore, hasParkingLot, businessHours, latitude, longitude, address, subject, species) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 f = open('./dataset/petraschu.csv','r',encoding='cp949')
