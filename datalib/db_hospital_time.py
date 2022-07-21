@@ -1,5 +1,5 @@
 import pymysql
-db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
+
 def db_to_flask_time(db,hospiID):
     query = f'SELECT * FROM start_end WHERE HospitalID = "{hospiID}"'
     c1=db.cursor()
