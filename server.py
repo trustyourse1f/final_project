@@ -2,16 +2,32 @@ from flask import Flask, request, make_response, jsonify, Response
 import os
 from datalib import db_readhospital
 from datalib import mysql_reservation
+from datalib import db_hospital_time
 import pymysql
 
-db_conn = pymysql.connect(host='', port=3306, user='root', passwd='', db='petmily_db')
-
+db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
 @app.route('/markerinfo', methods=['GET'])
 def res_xylist():
     x=db_readhospital.db_to_flask(db_conn)
     return jsonify(x)
+
+@app.route('/buisnesshour', methods = ['GET'])
+def hospital_time():
+    try:
+        try: 
+            hospid = request.args.get('hospitalid')            
+            hosptime = db_hospital_time.db_to_flask_time(db_conn,hospid)
+            return jsonify(hosptime)
+        except Exception as e:
+            print(e)
+            return Response("", status=400)
+    except Exception as e:
+        print(e)
+        return Response("", status=500)
+
+
 
 @app.route('/reserve', methods=['POST'])
 def insert_data():
