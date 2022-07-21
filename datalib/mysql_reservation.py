@@ -12,7 +12,6 @@ def reservation_save(HospitalID, Customer_name, Customer_number, AnimalType, Sym
     sql = "insert into reservation (Hospital_ID, Customer_name, Customer_number, AnimalType, Symptom, Time) values (%s,%s,%s,%s,%s,%s)"
     curs.execute(sql, (HospitalID, Customer_name, Customer_number, AnimalType, Symptom, Time))
     conn.commit()
-    conn.close()
 
 
 

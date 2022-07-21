@@ -1,10 +1,11 @@
-import Reservation from './infosection/Reservation';
+import ChatBot from './infosection/ChatBot';
+import './InfoArticle.css';
 
 function InfoArticle(props) {
     
     return (
-        <article>
-            <Reservation/>
+        <article className='info'>
+            <ChatBot/>
         </article>
     );
 }

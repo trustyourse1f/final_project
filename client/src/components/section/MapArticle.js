@@ -41,9 +41,7 @@ function MapArticle(props) {
     }, []);
         
     return (
-        <>
         <div id="map"></div>
-        </>
     );
 }
 
