@@ -1,8 +1,7 @@
 import pymysql
 db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
 def db_to_flask_time(db,hospiID):
-    query = f'SELECT * FROM start_end WHERE Hospital_ID = "{hospiID}"'
-    result=[]
+    query = f'SELECT * FROM start_end WHERE HospitalID = "{hospiID}"'
     c1=db.cursor()
     c1.execute(query)
     for row in c1:
@@ -16,7 +15,7 @@ def db_to_flask_time(db,hospiID):
                 "sun":f'{row[7]}~{row[15]}',
                 "hol":f'{row[8]}~{row[16]}'
                 }
-        result.append(j_dict)
+        result = j_dict
     return result
 
 # def hosp_id(db):
