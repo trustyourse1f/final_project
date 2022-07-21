@@ -58,7 +58,6 @@ CREATE TABLE gu_info(
 DROP TABLE IF EXISTS start_end;
 CREATE TABLE start_end(
     HospitalID INT(11) PRIMARY KEY,
-    name CHAR(50),
     mon_start CHAR(50),
     tue_start CHAR(50),
     wed_start CHAR(50),
@@ -75,6 +74,5 @@ CREATE TABLE start_end(
     sat_end CHAR(50),
     sun_end CHAR(50),
     hol_end CHAR(50),
-    businessHours CHAR(255),
     FOREIGN KEY(HospitalID) REFERENCES hospital_info(HospitalID)
 );
