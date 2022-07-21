@@ -49,12 +49,12 @@ conn.commit()
 f.close()
 
 ###start_end
-sql = "insert into start_end (HospitalID, name, mon_start, tue_start, wed_start, thu_start, fri_start, sat_start, sun_start, hol_start, mon_end, tue_end, wed_end, thu_end, fri_end, sat_end, sun_end, hol_end, businessHours) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+sql = "insert into start_end (HospitalID, mon_start, tue_start, wed_start, thu_start, fri_start, sat_start, sun_start, hol_start, mon_end, tue_end, wed_end, thu_end, fri_end, sat_end, sun_end, hol_end) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 f = open('./dataset/start_endv1.csv','r',encoding='utf-8')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
-    curs.execute(sql, (line[0],line[1],line[2],line[3],line[4],line[5],line[6],line[7],line[8],line[9],line[10],line[11],line[12],line[13],line[14],line[15],line[16],line[17],line[18]))
+    curs.execute(sql, (line[0],line[2],line[3],line[4],line[5],line[6],line[7],line[8],line[9],line[10],line[11],line[12],line[13],line[14],line[15],line[16],line[17]))
 conn.commit()
 conn.close()
 f.close()
