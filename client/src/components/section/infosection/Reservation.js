@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { post_reservation, get_buisnesshour } from 'jslib/reservation_api';
+import 'assets/CSS/Calendar.css';
 
 function Reservation(props) {
+    const [selectedDate, setSelectedDate] = useState(new Date());
     let hname = null;
     //let reserveContainer = [];
     hname = props.name;
@@ -31,8 +33,17 @@ function Reservation(props) {
     return (
         <div>
             <h1>{hname}</h1>
-            <div>
-                <Calendar/>
+            <div className="calendar-container">
+                <Calendar onChange={setSelectedDate} value={selectedDate}/>
+            </div>
+            <div className="time-selection-container">
+                <h1>
+                    {`${selectedDate.getFullYear()}년 ${selectedDate.getMonth()}월 ${selectedDate.getDate()}일`}
+                </h1>
+                <div className="time-selection">
+                    <button>9:00</button>
+                    <button>9:30</button>
+                </div>
             </div>
         </div>
     );
