@@ -22,57 +22,59 @@ CREATE TABLE hospital_info(
 DROP TABLE IF EXISTS reservation;
 CREATE TABLE reservation(
     Hospital_ID INT(11),
+    ReservationID INT(11) AUTO_INCREMENT PRIMARY KEY,
     Customer_name VARCHAR(10),
     Customer_number VARCHAR(14),
     AnimalType VARCHAR(3),
     Symptom VARCHAR(255),
-    Time VARCHAR(255),
+    Time TIMESTAMP,
     FOREIGN KEY(Hospital_ID) REFERENCES hospital_info(HospitalID)
 );
 
 DROP TABLE IF EXISTS symptom;
 CREATE TABLE symptom(
     Symptom_code VARCHAR(15),
-    Sorted_Symptom_kor VARCHAR(255),
-    Sorted_Symptom_eng VARCHAR(255),
-    Symptom_code_list VARCHAR(255),
+    Sorted_Symptom_kor VARCHAR(50),
+    Sorted_Symptom_eng VARCHAR(50),
+    Symptom_code_list VARCHAR(50) PRIMARY KEY,
     Symptom_name VARCHAR(255),
-    info VARCHAR(255)
+    info VARCHAR(50)
 );
 
 DROP TABLE IF EXISTS disease_info;
 CREATE TABLE disease_info(
+	disease_code INT(11) PRIMARY KEY AUTO_INCREMENT,
     Disease_name VARCHAR(255),
-    Species VARCHAR(255),
+    Species VARCHAR(50),
     Definition TEXT,
     Main_Symptom TEXT
 );
 
 DROP TABLE IF EXISTS gu_info;
 CREATE TABLE gu_info(
-    gu CHAR(10),
+    gu CHAR(10) PRIMARY KEY,
     Hospital TINYINT(3),
     Is24 TINYINT(3)
 );
 
 DROP TABLE IF EXISTS start_end;
 CREATE TABLE start_end(
-    HospitalID INT(11) PRIMARY KEY,
-    mon_start CHAR(50),
-    tue_start CHAR(50),
-    wed_start CHAR(50),
-    thu_start CHAR(50),
-    fri_start CHAR(50),
-    sat_start CHAR(50),
-    sun_start CHAR(50),
-    hol_start CHAR(50),
-    mon_end CHAR(50),
-    tue_end CHAR(50),
-    wed_end CHAR(50),
-    thu_end CHAR(50),
-    fri_end CHAR(50),
-    sat_end CHAR(50),
-    sun_end CHAR(50),
-    hol_end CHAR(50),
+    HospitalID INT(11),
+    mon_start INT(5),
+    tue_start INT(5),
+    wed_start INT(5),
+    thu_start INT(5),
+    fri_start INT(5),
+    sat_start INT(5),
+    sun_start INT(5),
+    hol_start INT(5),
+    mon_end INT(5),
+    tue_end INT(5),
+    wed_end INT(5),
+    thu_end INT(5),
+    fri_end INT(5),
+    sat_end INT(5),
+    sun_end INT(5),
+    hol_end INT(5),
     FOREIGN KEY(HospitalID) REFERENCES hospital_info(HospitalID)
 );
