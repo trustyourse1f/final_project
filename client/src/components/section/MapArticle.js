@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './MapArticle.css';
+import 'assets/CSS/MapArticle.css';
 import KakaoMap from 'jslib/kakaomap';
 import { useSelector, useDispatch } from 'react-redux';
 import { setHospitals } from 'reduxapp/feature/hospitals';

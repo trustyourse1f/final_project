@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Reservation from './Reservation';
 import { setNull } from 'reduxapp/feature/selected_info';
-import './ChatBot.css';
+import 'assets/CSS/ChatBot.css';
 
 function ChatBot(props) {
     const dispatch = useDispatch();

@@ -1,5 +1,5 @@
 import ChatBot from './infosection/ChatBot';
-import './InfoArticle.css';
+import 'assets/CSS/InfoArticle.css';
 
 function InfoArticle(props) {
     

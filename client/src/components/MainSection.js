@@ -1,6 +1,6 @@
 import React from 'react';
 import { MapArticle, InfoArticle } from './section';
-import './MainSection.css';
+import 'assets/CSS/MainSection.css';
 
 class MainSection extends React.Component {
     render() {
