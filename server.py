@@ -5,7 +5,7 @@ from datalib import mysql_reservation
 from datalib import db_hospital_time
 import pymysql
 #db연동
-db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
+db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='petmily_db')
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
 #업체별 마커정보
@@ -43,7 +43,8 @@ def reserve_info_user():
     except Exception as e:
         print(e)
         return Response("", status=500)
-
+        
+#고객예약정보(병원) 클라이언트로
 @app.route('/reserveinfo/host', methods = ['GET'])
 def reserve_info_host():
     try:
