@@ -2,12 +2,12 @@ import pymysql
 import csv
 import pandas as pd
 
-hostname = ''
+hostname = 'localhost'
 portnum = 3306
 pswd = ''
 
 ###petraschu
-conn = pymysql.connect(host = hostname, port = portnum, user='root',password=pswd, db='petmily_db',charset='utf8')
+conn = pymysql.connect(host = hostname, port = portnum, user='root',password= pswd, db='petmily_db',charset='utf8')
 curs = conn.cursor()
 sql = "insert into hospital_info (HospitalID, name, contract, is24, isBeautyParlor, isHotel, isStore, hasParkingLot, businessHours, latitude, longitude, address, subject, species) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 f = open('./dataset/petraschu.csv','r',encoding='cp949')
@@ -50,7 +50,7 @@ f.close()
 
 ###start_end
 sql = "insert into start_end (HospitalID, mon_start, tue_start, wed_start, thu_start, fri_start, sat_start, sun_start, hol_start, mon_end, tue_end, wed_end, thu_end, fri_end, sat_end, sun_end, hol_end) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-f = open('./dataset/start_endv1.csv','r',encoding='utf-8')
+f = open('./dataset/start_end.csv','r',encoding='cp949')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
