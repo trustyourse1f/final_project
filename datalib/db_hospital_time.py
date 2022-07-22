@@ -6,14 +6,22 @@ def db_to_flask_time(db,hospiID):
     c1.execute(query)
     for row in c1:
         j_dict = {
-                "mon":f'{row[1]}~{row[9]}',
-                "tue":f'{row[2]}~{row[10]}',
-                "wed":f'{row[3]}~{row[11]}',
-                "thu":f'{row[4]}~{row[12]}',
-                "fri":f'{row[5]}~{row[13]}',
-                "sat":f'{row[6]}~{row[14]}',
-                "sun":f'{row[7]}~{row[15]}',
-                "hol":f'{row[8]}~{row[16]}'
+                "mon_start":row[1],
+                "tue_start":row[2],
+                "wed_start":row[3],
+                "thu_start":row[4],
+                "fri_start":row[5],
+                "sat_start":row[6],
+                "sun_start":row[7],
+                "hol_start":row[8],
+                "mon_end":row[9],
+                "tue_end":row[10],
+                "wed_end":row[11],
+                "thu_end":row[12],
+                "fri_end":row[13],
+                "sat_end":row[14],
+                "sun_end":row[15],
+                "hol_end":row[16]
                 }
         result = j_dict
     return result
