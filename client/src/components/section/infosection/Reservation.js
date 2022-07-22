@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
+import Calendar from 'react-calendar';
 import { post_reservation, get_buisnesshour } from 'jslib/reservation_api';
 
 function Reservation(props) {
     let hname = null;
-    let reserveContainer = [];
+    //let reserveContainer = [];
     hname = props.name;
 
     useEffect(() => {
         get_buisnesshour(props.HospitalID);
     }, [])
 
+    /*
     for(let i=9; i<18; i++)
     {
         let clickbtn = (e) => {
@@ -24,13 +26,13 @@ function Reservation(props) {
             post_reservation(data);
         }
         reserveContainer.push(<div><button onClick={clickbtn}>{`${i}시 예약`}</button></div>);
-    }
+    }*/
     
     return (
         <div>
             <h1>{hname}</h1>
             <div>
-                {reserveContainer}
+                <Calendar/>
             </div>
         </div>
     );
