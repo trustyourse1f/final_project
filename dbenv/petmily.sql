@@ -27,7 +27,7 @@ CREATE TABLE reservation(
     Customer_number VARCHAR(14),
     AnimalType VARCHAR(3),
     Symptom VARCHAR(255),
-    Time TIMESTAMP,
+    Time BIGINT(20) unsigned,
     FOREIGN KEY(Hospital_ID) REFERENCES hospital_info(HospitalID)
 );
 
