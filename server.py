@@ -66,12 +66,13 @@ def insert_data():
         data = request.get_json()
         print(data)
         try:
-            hospitalid_time=db_reservation.user_reservation(db_conn,data['HospitalID'])
-            
-            if :
-                return Response("",status=400)
-            mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
-            return Response("", status=200)
+            hospitalid_time = db_reservation.user_reservation(db_conn,data['HospitalID'])
+            for i in hospitalid_time:
+                if i['time'] == data['Time']:
+                    return Response("",status=400)
+                else:
+                    mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                    return Response("", status=200)
         except Exception as e:
             print(e)
             return Response("", status=500)
