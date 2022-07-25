@@ -5,7 +5,7 @@ from datalib import mysql_reservation
 from datalib import db_hospital_time
 import pymysql
 #db연동
-db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
+db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='petmily_db')
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
 #구정보 전송
