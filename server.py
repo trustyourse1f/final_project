@@ -5,7 +5,7 @@ from datalib import mysql_reservation
 from datalib import db_hospital_time
 import pymysql
 #db연동
-db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='', db='petmily_db')
+db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
 app = Flask(__name__, static_url_path='/', static_folder='build')
 
 #업체별 마커정보
@@ -66,6 +66,10 @@ def insert_data():
         data = request.get_json()
         print(data)
         try:
+            hospitalid_time=db_reservation.user_reservation(db_conn,data['HospitalID'])
+            
+            if :
+                return Response("",status=400)
             mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
             return Response("", status=200)
         except Exception as e:
