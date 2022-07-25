@@ -27,4 +27,17 @@ function get_buisnesshour(hid, set_cbk) {
     });
 }
 
-export { post_reservation, get_buisnesshour };
+function get_reservationtable(hid) {
+    axios({
+        method: 'GET',
+        url: '/reserveinfo?hospitalid=' + String(hid)
+    })
+    .then(res => {
+        console.log(res.data);
+    })
+    .catch(err => {
+        console.error(err);
+    })
+}
+
+export { post_reservation, get_buisnesshour, get_reservationtable };

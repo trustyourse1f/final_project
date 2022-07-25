@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import { post_reservation, get_buisnesshour } from 'jslib/reservation_api';
+import { post_reservation, get_buisnesshour, get_reservationtable } from 'jslib/reservation_api';
 import 'assets/CSS/Calendar.css';
 
 function Reservation(props) {
@@ -19,6 +19,7 @@ function Reservation(props) {
         selectedDate.setHours(0);
         selectedDate.setMinutes(0);
         get_buisnesshour(props.HospitalID, setBsnsHour);
+        get_reservationtable(props.HospitalID);
     }, [])
 
     let stt = 0;
