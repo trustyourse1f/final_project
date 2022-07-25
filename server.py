@@ -26,7 +26,8 @@ def res_xylist():
 def hospital_time():
     try:
         try: 
-            hospid = request.args.get('hospitalid')            
+            hospid = request.args.get('hospitalid')
+            print(hospid)            
             hosptime = db_hospital_time.db_to_flask_time(db_conn,hospid)
             return jsonify(hosptime)
         except Exception as e:
@@ -71,10 +72,22 @@ def reserve_info_host():
 def insert_data():
     if request.method == 'POST':
         data = request.get_json()
-        print(data)
         try:
-            mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
-            return Response("", status=200)
+            hospitalid_time = db_reservation.user_reservation(db_conn,data['HospitalID'])
+            print(hospitalid_time)
+            if len(hospitalid_time) < 1:
+                mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                return Response("", status=200)
+            else:
+                time_temp=[]
+                for i in hospitalid_time:
+                    time_temp.append(i['Time'])
+                if data['Time'] not in time_temp:
+                    mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                    return Response("", status=200)      
+                else:
+                    return Response("",status=400)
+
         except Exception as e:
             print(e)
             return Response("", status=500)
