@@ -14,17 +14,17 @@ function post_reservation(req_data) {
     })
 }
 
-function get_buisnesshour(hid) {
+function get_buisnesshour(hid, set_cbk) {
     axios({
         method: 'GET',
         url: '/buisnesshour?hospitalid=' + String(hid)
     })
     .then(res => {
-        console.log(res);
+        set_cbk(res.data);
     })
     .catch(err => {
         console.error(err);
-    })
+    });
 }
 
 export { post_reservation, get_buisnesshour };
