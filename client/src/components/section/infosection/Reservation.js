@@ -1,44 +1,86 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { post_reservation, get_buisnesshour } from 'jslib/reservation_api';
 import 'assets/CSS/Calendar.css';
 
 function Reservation(props) {
+    const [bsnsHour, setBsnsHour] = useState({});
     const [selectedDate, setSelectedDate] = useState(new Date());
-    let hname = null;
+    const [postData, setPostData] = useState({
+        HospitalID: props.HospitalID,
+        Customer_name:'',
+        Customer_number:'010-0000-0000',
+        AnimalType: '',
+        Symptom: '',
+        Time: 0
+    });
     let timeSelectionBtns = [];
-    hname = props.name;
-
     useEffect(() => {
-        get_buisnesshour(props.HospitalID);
+        selectedDate.setHours(0);
+        selectedDate.setMinutes(0);
+        get_buisnesshour(props.HospitalID, setBsnsHour);
     }, [])
 
-    for(let i=18; i<36; i++)
+    let stt = 0;
+    let end = 24;
+    switch(selectedDate.getDay()) {
+        case 0:
+            stt = bsnsHour.sun_start;
+            end = bsnsHour.sun_end;
+            break;
+        case 1:
+            stt = bsnsHour.mon_start;
+            end = bsnsHour.mon_end;
+            break;
+        case 2:
+            stt = bsnsHour.tue_start;
+            end = bsnsHour.tue_end;
+            break;
+        case 3:
+            stt = bsnsHour.wed_start;
+            end = bsnsHour.wed_end;
+            break;
+        case 4:
+            stt = bsnsHour.thu_start;
+            end = bsnsHour.thu_end;
+            break;
+        case 5:
+            stt = bsnsHour.fri_start;
+            end = bsnsHour.fri_end;
+            break;
+        case 6:
+            stt = bsnsHour.sat_start;
+            end = bsnsHour.sat_end;
+            break;
+    }
+
+    for(let i=stt; i<end; i+=30)
     {
-        const hour = parseInt(i/2);
-        const minute = (i % 2) * 30;
+        const hour = parseInt(i/60);
+        const minute = i % 60;
+        if(minute >= 30) {
+            minute = 30;
+        } else {
+            minute = 0;
+        }
         selectedDate.setHours(hour);
         selectedDate.setMinutes(minute);
         const tstmp = selectedDate.getTime();
         const clickbtn = (e) => {
-            let data = {
-                HospitalID: props.HospitalID,
-                Customer_name:'이진우',
-                Customer_number:'010-1234-1234',
-                AnimalType: '개',
-                Symptom: '결막염',
-                Time: tstmp
-            };
-            post_reservation(data);
+            postData.Time = tstmp;
+            document.querySelectorAll('.time-selection button').forEach(function(item) {
+                item.style.backgroundColor = '#e9e9e9'
+            });
+            e.target.style.backgroundColor = '#10e910';
         }
         timeSelectionBtns.push(<button onClick={clickbtn}>{`${hour}:${minute}`}</button>);
     }
     
     return (
         <div>
-            <h1>{hname}</h1>
+            <h1>{props.name}</h1>
             <div className="calendar-container">
-                <Calendar onChange={setSelectedDate} value={selectedDate}/>
+                <Calendar onChange={setSelectedDate}/>
             </div>
             <div className="time-selection-container">
                 <h1>
@@ -46,6 +88,13 @@ function Reservation(props) {
                 </h1>
                 <div className="time-selection">
                     {timeSelectionBtns}
+                </div>
+                <div>
+                    <input type='text' onChange={(e) => {postData.Customer_name = e.target.value}} placeholder="이름"/>
+                    <input type='text' onChange={(e) => {postData.Customer_number = e.target.value}} placeholder="전화번호"/>
+                    <input type='text' onChange={(e) => {postData.AnimalType = e.target.value}} placeholder="동물종류"/>
+                    <input type='text' onChange={(e) => {postData.Symptom = e.target.value}} placeholder="증상"/>
+                    <button onClick={() => {post_reservation(postData)}}>예약하기</button>
                 </div>
             </div>
         </div>
