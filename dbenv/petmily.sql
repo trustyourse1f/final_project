@@ -54,7 +54,9 @@ DROP TABLE IF EXISTS gu_info;
 CREATE TABLE gu_info(
     gu CHAR(10) PRIMARY KEY,
     Hospital TINYINT(3),
-    Is24 TINYINT(3)
+    Is24 TINYINT(3),
+    latitude DOUBLE(28, 25),
+    longitude DOUBLE(28, 25)
 );
 
 DROP TABLE IF EXISTS start_end;
