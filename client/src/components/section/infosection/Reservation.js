@@ -54,6 +54,12 @@ function Reservation(props) {
             break;
     }
 
+    if(stt%60 > 30) {
+        stt = stt + 60 - (stt%60);
+    } else {
+        stt = stt - (stt%60);
+    }
+
     for(let i=stt; i<end; i+=30)
     {
         const hour = parseInt(i/60);
@@ -73,11 +79,12 @@ function Reservation(props) {
             });
             e.target.style.backgroundColor = '#10e910';
         }
-        timeSelectionBtns.push(<button onClick={clickbtn}>{`${hour}:${minute}`}</button>);
+        timeSelectionBtns.push(<button onClick={clickbtn}>{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
     }
     
     return (
         <div>
+            <button onClick={props.closeBtn}>X</button>
             <h1>{props.name}</h1>
             <div className="calendar-container">
                 <Calendar onChange={setSelectedDate}/>
