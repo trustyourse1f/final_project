@@ -39,12 +39,12 @@ conn.commit()
 f.close()
 
 ###gu_info
-sql = "insert into gu_info (gu, Hospital, Is24) values (%s,%s,%s)"
+sql = "insert into gu_info (gu, Hospital, Is24, latitude, longitude) values (%s,%s,%s,%s,%s)"
 f = open('./dataset/gu_counts.csv','r',encoding='cp949')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
-    curs.execute(sql, (line[0],line[1],line[2]))
+    curs.execute(sql, (line[0],line[1],line[2],line[3],line[4]))
 conn.commit()
 f.close()
 
