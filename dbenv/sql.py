@@ -4,7 +4,7 @@ import pandas as pd
 
 hostname = 'localhost'
 portnum = 3306
-pswd = ''
+pswd = '48615+'
 
 ###petraschu
 conn = pymysql.connect(host = hostname, port = portnum, user='root',password= pswd, db='petmily_db',charset='utf8')
@@ -20,11 +20,11 @@ f.close()
 
 ###disease_info
 sql = "insert into disease_info (Disease_name, Species, Definition, Main_Symptom) values (%s,%s,%s,%s)"
-f = open('./dataset/질병정보v5.csv','r',encoding='cp949')
+f = open('./dataset/질병정보v2.csv','r',encoding='cp949')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
-    curs.execute(sql, (line[0],line[1],line[2],line[4]))
+    curs.execute(sql, (line[0],line[1],line[2],line[3]))
 conn.commit()
 f.close()
 
