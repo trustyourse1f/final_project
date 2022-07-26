@@ -8,10 +8,7 @@ def user_reservation(db,hospiID):
     c1=db.cursor()
     c1.execute(query)
     for row in c1:
-        j_dict = {
-            "Time":row[6]
-                }
-        result.append(j_dict)
+        result.append(row[6])
     return result
 
 def host_reservation(db,hospiID):
