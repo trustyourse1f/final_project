@@ -5,6 +5,7 @@ from datalib import Symptom_prediction_system, db_guinfo, db_readhospital, db_re
 from datalib import mysql_reservation
 from datalib import db_hospital_time
 import pymysql
+import urllib
 #db연동
 ht='localhost'
 pt=3306
@@ -23,10 +24,30 @@ def category():
     categorylist=Symptom_prediction_system.select_category_symptom_list()
     return jsonify(categorylist)
 
-#증상선택
+#증상리스트
 @app.route('/symptom',methods=['GET'])
 def symptom_select():
-    symptom_selec = request.args.get('category')
+    try:
+        symptom_category_select = request.args.get('category')
+        symptom_category_select = urllib.parse.unquote(symptom_category_select)
+        symptom_list = Symptom_prediction_system.symptom(symptom_category_select,Symptom_prediction_system.db_connect(pw))
+        return jsonify(symptom_list)
+    except Exception as e:
+        print(e)
+        return Response("", status=400)
+
+#룰베이스예측시스템
+@app.route('/predict-disease',methods=['POST'])
+def predict_disease():
+    try:
+        db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
+        symptom_data = request.get_json()
+        result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
+        return jsonify(result_predict_disease)
+    except Exception as e:
+        print(e)
+        return Response("", status=400)
+
 
 #구정보 전송
 @app.route('/guinfo', methods=['GET'])
@@ -113,7 +134,7 @@ def insert_data():
             else:
                 time_temp=[]
                 for i in hospitalid_time:
-                    time_temp.append(i['Time'])
+                    time_temp.append(i)
                 if data['Time'] not in time_temp:
                     mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
                     db_conn.close()
