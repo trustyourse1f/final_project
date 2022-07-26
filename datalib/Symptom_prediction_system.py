@@ -124,7 +124,7 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
     index_number_dict={}
     index_number=0
     if select_species == '강아지':
-        df_dog = df[(df.species == '개') | (df.species == '개, 고양이')].reset_index(drop=True)
+        df_dog = df[(df.Species == '개') | (df.Species == '개, 고양이')].reset_index(drop=True)
         for index in df_dog['Main_Symptom']:
             index_number+=1
             count=0
@@ -133,6 +133,7 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
                     count+=1
             index_number_dict[df_dog["Disease_name"][index_number-1]]=count
         result = dict(sorted(index_number_dict.items(), key=lambda x: x[1], reverse=True)) 
+        result_list=[]
         num=0
         for i,j in result.items():
             num+=1
@@ -163,12 +164,11 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
         return result_list
 
 
-if __name__ == '__main__':
-    # print(symptom('생식기계 증상',db_connect('48615+'))[1])
-    # print([symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]])
-    # a=[symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
-    # print(admin_list(['c025','c030','c035','c040'],db_connect('48615+')))
-    # print(disease_prediction(admin_list(a),'고양이',disease_pretreatment(db_conn)))
-    print(symptom('생식기계 증상',db_connect('48615+')))
-    # [symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
+# print(symptom('생식기계 증상',db_connect('48615+'))[1])
+# print([symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]])
+# a=[symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
+# print(admin_list(['c025','c030','c035','c040'],db_connect('48615+')))
+# print(disease_prediction(admin_list(a),'고양이',disease_pretreatment(db_conn)))
+# print(symptom('생식기계 증상',db_connect('48615+')))
+# [symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
 
