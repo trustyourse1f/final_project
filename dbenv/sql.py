@@ -4,7 +4,7 @@ import pandas as pd
 
 hostname = 'localhost'
 portnum = 3306
-pswd = '48615+'
+pswd = ''
 
 ###petraschu
 conn = pymysql.connect(host = hostname, port = portnum, user='root',password= pswd, db='petmily_db',charset='utf8')
