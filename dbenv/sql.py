@@ -50,7 +50,7 @@ f.close()
 
 ###start_end
 sql = "insert into start_end (HospitalID, mon_start, tue_start, wed_start, thu_start, fri_start, sat_start, sun_start, hol_start, mon_end, tue_end, wed_end, thu_end, fri_end, sat_end, sun_end, hol_end) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-f = open('./dataset/start_end.csv','r',encoding='cp949')
+f = open('./dataset/start_endv2.csv','r',encoding='utf-8')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
