@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { post_reservation, get_buisnesshour, get_reservationtable } from 'jslib/reservation_api';
 import 'assets/CSS/Calendar.css';
+import 'assets/CSS/Reservation.css';
 
 function Reservation(props) {
     const [bsnsHour, setBsnsHour] = useState({});
@@ -14,12 +15,14 @@ function Reservation(props) {
         Symptom: '',
         Time: 0
     });
+    const [reservationTable, setReservationTable] = useState([]);
+
     let timeSelectionBtns = [];
     useEffect(() => {
         selectedDate.setHours(0);
         selectedDate.setMinutes(0);
         get_buisnesshour(props.HospitalID, setBsnsHour);
-        get_reservationtable(props.HospitalID);
+        get_reservationtable(props.HospitalID, setReservationTable);
     }, [])
 
     let stt = 0;
@@ -73,15 +76,22 @@ function Reservation(props) {
         selectedDate.setHours(hour);
         selectedDate.setMinutes(minute);
         const tstmp = selectedDate.getTime();
-        const clickbtn = (e) => {
-            postData.Time = tstmp;
-            document.querySelectorAll('.time-selection button').forEach(function(item) {
-                item.style.backgroundColor = '#e9e9e9'
-            });
-            e.target.style.backgroundColor = '#10e910';
+        if(reservationTable.includes(tstmp)) {
+            timeSelectionBtns.push(<button className="invalidbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
+        } else {
+            const clickbtn = (e) => {
+                postData.Time = tstmp;
+                document.querySelectorAll('.time-selection .validbtn').forEach(function(item) {
+                    item.style.backgroundColor = '#e9e9e9'
+                });
+                e.target.style.backgroundColor = '#10e910';
+            }
+            timeSelectionBtns.push(<button onClick={clickbtn} className="validbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
         }
-        timeSelectionBtns.push(<button onClick={clickbtn}>{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
     }
+    document.querySelectorAll('.time-selection button').forEach(function(item) {
+        item.removeAttribute("style");
+    });
     
     return (
         <div>
@@ -102,7 +112,12 @@ function Reservation(props) {
                     <input type='text' onChange={(e) => {postData.Customer_number = e.target.value}} placeholder="전화번호"/>
                     <input type='text' onChange={(e) => {postData.AnimalType = e.target.value}} placeholder="동물종류"/>
                     <input type='text' onChange={(e) => {postData.Symptom = e.target.value}} placeholder="증상"/>
-                    <button onClick={() => {post_reservation(postData)}}>예약하기</button>
+                    <button onClick={() => {post_reservation(postData).then(res => {
+                        get_reservationtable(props.HospitalID, setReservationTable);
+                        postData.Time = 0;
+                    }).catch(err => {
+                        console.error(err);
+                    });}}>예약하기</button>
                 </div>
             </div>
         </div>

@@ -1,7 +1,10 @@
 import axios from 'axios';
 
 function post_reservation(req_data) {
-    axios({
+    if(req_data.Time === 0) {
+        return Promise.reject('time is not selected');
+    }
+    return axios({
         method: 'POST',
         url: '/reserve',
         data: req_data
@@ -15,7 +18,7 @@ function post_reservation(req_data) {
 }
 
 function get_buisnesshour(hid, set_cbk) {
-    axios({
+    return axios({
         method: 'GET',
         url: '/buisnesshour?hospitalid=' + String(hid)
     })
@@ -27,13 +30,13 @@ function get_buisnesshour(hid, set_cbk) {
     });
 }
 
-function get_reservationtable(hid) {
-    axios({
+function get_reservationtable(hid, set_cbk) {
+    return axios({
         method: 'GET',
         url: '/reserveinfo?hospitalid=' + String(hid)
     })
     .then(res => {
-        console.log(res.data);
+        set_cbk(res.data);
     })
     .catch(err => {
         console.error(err);
