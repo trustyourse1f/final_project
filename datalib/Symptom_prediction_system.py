@@ -1,6 +1,5 @@
 import pandas as pd
 import pymysql
-
 def db_connect(pw):
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd=f'{pw}', db='petmily_db', charset='utf8')
     query = "SELECT * FROM symptom"
@@ -69,43 +68,56 @@ def select_category_symptom_list():
     return category_list
 #증상선택
 def symptom(category_select,db):
-    Symptom_list=[]
+    Symptom_code_list=[]
     info_list=[]
     index=-1
     for i in db:
         index+=1
         if category_select == i['Sorted_Symptom_kor']:
-            if i['Symptom_name'] not in Symptom_list:
-                Symptom_list.append(i['Symptom_name'])
+            if i['Symptom_code_list'] not in Symptom_code_list:
+                Symptom_code_list.append(i['Symptom_code_list'])
                 info_list.append(db[index]['info'])
-    return info_list,Symptom_list
+    result_list=[]
+    for j in range(len(info_list)):
+        result_dict={
+            'code':Symptom_code_list[j],
+            'info':info_list[j]
+            }
+        result_list.append(result_dict)
+    return result_list
 
 #관리자리스트선택목록,사용자선택목록 저장
-def symptom_selected(Symptom_select,info_list,Symptom_list):  
-    admin_select_list=[]
-    user_check_list=[]
-    info_index=-1
-    for i in info_list:
-        info_index+=1
-        if i == Symptom_select:
-            break
-    admin_select_list.append(Symptom_list[info_index])#전문용어
-    if Symptom_select in info_list:
-        user_check_list.append(Symptom_select)#쉬운용어
-    return Symptom_select,Symptom_list[info_index]
+# def symptom_selected(Symptom_select,info_list,Symptom_list):  
+#     admin_select_list=[]
+#     user_check_list=[]
+#     info_index=-1
+#     for i in info_list:
+#         info_index+=1
+#         if i == Symptom_select:
+#             break
+#     admin_select_list.append(Symptom_list[info_index])#전문용어
+#     if Symptom_select in info_list:
+#         user_check_list.append(Symptom_select)#쉬운용어
+#     return Symptom_select,Symptom_list[info_index]
 
 #admin 전처리
-def admin_list(admin_select_list):
+def admin_list(admin_select_list,db):
     admin=[]
-    for i in admin_select_list:
+    symptom_name=[]
+    for i in db:
+        for j in admin_select_list:
+            if j == i['Symptom_code_list']:
+                if i['Symptom_name'] not in admin:
+                    admin.append(i['Symptom_name'])
+    for i in admin:
         if "," in i:
             a=i.split(',')
             for j in a:
                 j=j.strip().replace(" ","")
-                admin.append(j)
+                symptom_name.append(j)
         else:
-            admin.append(i)
-    return admin
+            symptom_name.append(i)
+    return symptom_name
 #증상예측
 def disease_prediction(admin_select_list,select_species,disease_pretreatment):
     df=disease_pretreatment
@@ -151,8 +163,8 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
         return result_list
 # print(symptom('생식기계 증상',db_connect('48615+'))[1])
 # print([symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]])
-a=[symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
-# print(admin_list(a))
-print(disease_prediction(admin_list(a),'고양이',disease_pretreatment(db_conn)))
-
+# a=[symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
+# print(admin_list(['c025','c030','c035','c040'],db_connect('48615+')))
+# print(disease_prediction(admin_list(a),'고양이',disease_pretreatment(db_conn)))
+# print(symptom('생식기계 증상',db_connect('48615+')))
 # [symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]]
