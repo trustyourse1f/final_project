@@ -1,7 +1,6 @@
-from re import A
 import pandas as pd
 import pymysql
-db_conn = pymysql.connect(host='localhost', port=3306, user='root', passwd='48615+', db='petmily_db')
+
 def db_connect(pw):
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd=f'{pw}', db='petmily_db', charset='utf8')
     query = "SELECT * FROM symptom"
@@ -80,6 +79,7 @@ def symptom(category_select,db):
                 Symptom_list.append(i['Symptom_name'])
                 info_list.append(db[index]['info'])
     return info_list,Symptom_list
+
 #관리자리스트선택목록,사용자선택목록 저장
 def symptom_selected(Symptom_select,info_list,Symptom_list):  
     admin_select_list=[]
