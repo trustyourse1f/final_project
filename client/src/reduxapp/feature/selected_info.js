@@ -4,7 +4,11 @@ export const selectedInfoSlice = createSlice({
   name: 'selectedInfo',
   initialState: {
     value: {},
-    changed_val: 0 // which type of value has it changed into 
+    changed_val: 0, // which type of value has it changed into
+    symptoms_animaltype: {
+      Symptom: '',
+      AnimalType: ''
+    }
   },
   reducers: {
     setInfo: (state, action) => {
@@ -16,6 +20,10 @@ export const selectedInfoSlice = createSlice({
       state.changed_val = 1;
     },
 
+    setSymptomsAnimaltype: (state, action) => {
+      state.symptoms_animaltype = action.payload;
+    },
+
     setNull: (state) => {
       state.value = {};
       state.changed_val = 0;
@@ -24,6 +32,6 @@ export const selectedInfoSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setInfo, setNull } = selectedInfoSlice.actions;
+export const { setInfo, setSymptomsAnimaltype, setNull } = selectedInfoSlice.actions;
 
 export default selectedInfoSlice.reducer;

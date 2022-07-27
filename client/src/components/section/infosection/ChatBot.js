@@ -1,16 +1,25 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { get_symptomCategory, get_symptoms, get_species, post_predictDisease } from 'jslib/symptomdisease_api';
+import { setSymptomsAnimaltype } from 'reduxapp/feature/selected_info';
 import 'assets/CSS/ChatBot.css';
 
 function ChatBot(props) {
+    const dispatch = useDispatch();
     const [chatlog, setChatlog] = useState([]);
     const [chatPhase, setChatPhase] = useState(0);
     const [postData, setPostData] = useState({
         species: '',
-        symptoms: new Set()
+        symptoms: new Set(),
+        symptomInfo: new Set()
     });
 
-    console.log(chatPhase);
+    function resetChat() {
+        postData.species = '';
+        postData.symptoms = new Set();
+        chatlog.splice(0, chatlog.length);
+        setChatPhase(0);
+    }
 
     if(chatPhase==0) {
         chatlog.push(<div className="botmessage">
@@ -23,7 +32,7 @@ function ChatBot(props) {
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
                         let pa = e.target.parentElement;
-                        pa.remove();
+                        pa.style.display='none';
                         postData.species = item;
                         chatlog.push(<div className="usermessage">{item}</div>);
                         setChatPhase(2);
@@ -40,7 +49,7 @@ function ChatBot(props) {
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
                         let pa = e.target.parentElement;
-                        pa.remove();
+                        pa.style.display='none';
                         postData.symcat = item;
                         chatlog.push(<div className="usermessage">{item}</div>);
                         setChatPhase(4);
@@ -58,16 +67,18 @@ function ChatBot(props) {
                     let clckevent = (e) => {
                         if(!postData.symptoms.has(item.code)) {
                             postData.symptoms.add(item.code);
+                            postData.symptomInfo.add(item.info);
                             e.target.style.backgroundColor = '#10e910';
                         } else if(postData.symptoms.has(item.code)) {
                             postData.symptoms.delete(item.code);
+                            postData.symptomInfo.delete(item.info);
                             e.target.removeAttribute("style");
                         }
                     };
                     return (<button onClick={clckevent} key={`${index}`}>{item.info}</button>);
                 })}
                 <button onClick={(e) => {
-                    e.target.parentElement.remove();
+                    e.target.parentElement.style.display = 'none';
                     setChatPhase(6);
                 }}>선택 완료</button>
             </div>);
@@ -77,17 +88,20 @@ function ChatBot(props) {
         chatlog.push(<div className='botmessage'>증상을 더 선택하시겠습니까? 아니면 질병예측을 하시겠습니까?</div>);
         chatlog.push(<div className='botmessage'>
             <button onClick={e => {
-                e.target.parentElement.remove();
+                e.target.parentElement.style.display='none';
                 setChatPhase(2);
             }}>추가 증상 선택</button>
             <button onClick={e => {
-                e.target.parentElement.remove();
+                e.target.parentElement.style.display='none';
                 setChatPhase(8);
             }}>질병예측</button>
         </div>);
         setChatPhase(7);
     } else if(chatPhase==8) {
         chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.</div>);
+        dispatch(setSymptomsAnimaltype({
+            Symptom: Array.from(postData.symptomInfo).join(', '),
+            AnimalType: postData.species}));
         post_predictDisease(Array.from(postData.symptoms), postData.species).then(res => {
             chatlog.push(<div className='botmessage'>
                 <ol>
@@ -96,6 +110,7 @@ function ChatBot(props) {
                     })}
                 </ol>
             </div>);
+            chatlog.push(<div className='botmessage'>증상이 저장되었습니다.</div>);
             setChatPhase(9);
         })
     }
@@ -106,6 +121,9 @@ function ChatBot(props) {
                 <div className='chatscreen'>
                     {chatlog}
                 </div>
+            </div>
+            <div className='system-btn-table'>
+                <button onClick={resetChat}>reset</button>
             </div>
         </div>
     );
