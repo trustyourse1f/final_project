@@ -9,7 +9,7 @@ import urllib
 #db연동
 ht='localhost'
 pt=3306
-pw=''
+pw='48615+'
 
 app = Flask(__name__, static_url_path='/', static_folder='build')
 #축종리스트
