@@ -64,7 +64,7 @@ def select_species():
     return select_specieslist
 #카테고리선택
 def select_category_symptom_list():
-    category_list=['청각기관 증상','심혈관계 증상','소화기계','안과 증상','전신종합 증상','근골격계','신경계 증상','통증 증상','호흡기계 증상','피부/외피계 증상','생식기계 증상','비뇨기계 증상','비뇨기계 증상']
+    category_list=['청각기관 증상','심혈관계 증상','소화기계','안과 증상','전신종합 증상','근골격계','신경계 증상','통증 증상','호흡기계 증상','피부/외피계 증상','생식기계 증상','비뇨기계 증상']
     return category_list
 #증상선택
 def symptom(category_select,db):
