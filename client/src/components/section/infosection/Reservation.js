@@ -93,10 +93,14 @@ function Reservation(props) {
                 timeSelectionBtns.push(<button onClick={clickbtn} className="validbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
             }
         }
+        setTimeSelectionBtns([...timeSelectionBtns]);
+    }, [selectedDate, bsnsHour]);
+
+    useEffect(() => {
         document.querySelectorAll('.time-selection button').forEach(function(item) {
             item.removeAttribute("style");
         });
-    }, [selectedDate])
+    }, [timeSelectionBtns]);
     
     return (
         <div>
