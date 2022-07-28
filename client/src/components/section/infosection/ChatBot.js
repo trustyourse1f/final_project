@@ -78,6 +78,13 @@ function ChatBot(props) {
                     return (<button onClick={clckevent} key={`${index}`}>{item.info}</button>);
                 })}
                 <button onClick={(e) => {
+                    chatlog.push(<div className="usermessage">
+                        <ul>
+                            {Array.from(postData.symptomInfo).map((item, index) => {
+                                return (<li key={`${index}`}>{item}</li>);
+                            })}
+                        </ul>
+                    </div>)
                     e.target.parentElement.style.display = 'none';
                     setChatPhase(6);
                 }}>선택 완료</button>

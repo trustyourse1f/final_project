@@ -116,14 +116,14 @@ function Reservation(props) {
                 <div className="time-selection">
                     {timeSelectionBtns}
                 </div>
-                <div>
+                <div className="userinfo-input-container">
                     <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
                     placeholder="이름" value={postData.Customer_name}/>
                     <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
                     placeholder="전화번호" value={postData.Customer_number}/>
                     <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
                     placeholder="동물종류" value={postData.AnimalType}/>
-                    <input type='text' onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
+                    <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
                     placeholder="증상" value={postData.Symptom}/>
                     <button onClick={() => {post_reservation(postData).then(res => {
                         get_reservationtable(props.HospitalID, setReservationTable);

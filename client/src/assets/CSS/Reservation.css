@@ -5,3 +5,8 @@
 .invalidbtn {
     background-color: #3a3a3a;
 }
+
+.userinfo-input-container {
+    display: flex;
+    flex-direction: column;
+}
