@@ -20,6 +20,7 @@ function MapArticle(props) {
         .then(res => {
             dispatch(setHospitals(res.data));
             let tmp_map = new KakaoMap('map');
+            let mk_lst = [];
             for(let i=0; i<res.data.length; i++)
             {
                 let mkimg = null;
@@ -29,6 +30,8 @@ function MapArticle(props) {
                     mkimg = tmp_map.add_markerImage('/Images/m_b.png', [24, 32], [12, 32]);
                 }
                 let mk = tmp_map.add_marker(res.data[i].latitude, res.data[i].longitude, true, mkimg);
+                mk_lst.push(mk);
+
                 tmp_map.deploymarker(mk);
                 let infowindow = `<div class="infowin" id="h${i}">
                                     <h1>${res.data[i].name}</h1>
@@ -39,6 +42,20 @@ function MapArticle(props) {
                     dispatch(setInfo(res.data[i]));
                 });
             }
+
+            let zoomcbk = (lvl) => {
+                if(lvl > 6) {
+                    mk_lst.forEach((val, ind) => {
+                        tmp_map.deploymarker(val, false);
+                    });
+                } else {
+                    mk_lst.forEach((val) => {
+                        tmp_map.deploymarker(val, true);
+                    })
+                }
+            };
+            tmp_map.zoomlevelListener(zoomcbk);
+
             setKmap(tmp_map);
         })
         .catch(err => {

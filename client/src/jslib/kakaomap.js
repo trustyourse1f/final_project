@@ -2,7 +2,7 @@
 const { kakao } = window;
 
 class KakaoMap {
-    constructor(container_id, lat = 37.5675, lng = 126.98, lvl = 8) {
+    constructor(container_id, lat = 37.5675, lng = 126.98, lvl = 6) {
         const container = document.getElementById(container_id);
         const options = {
             center: new kakao.maps.LatLng(lat, lng),
@@ -11,11 +11,15 @@ class KakaoMap {
         this.map = new kakao.maps.Map(container, options);
     }
 
-    deploymarker(marker) {
+    deploymarker(marker, deploy = true) {
         if(marker === null) {
             console.error('There is no marker');
         } else {
-            marker.setMap(this.map);
+            if(deploy) {
+                marker.setMap(this.map);
+            } else {
+                marker.setMap(null);
+            }
         }
     }
 
@@ -85,6 +89,23 @@ class KakaoMap {
         let imgOpt = {offset: new kakao.maps.Point(offset[0], offset[1])};
 
         return  new kakao.maps.MarkerImage(src, imgSize, imgOpt);
+    }
+
+    zoomlevelListener(cbk = (lvl) => {}) {
+        kakao.maps.event.addListener(this.map, 'zoom_changed', () => {
+            cbk(this.map.getLevel());
+        });
+    }
+
+    add_customOverlay(lat, lng, content) {
+        // 커스텀 오버레이가 표시될 위치입니다
+        var position = new kakao.maps.LatLng(lat, lng);
+
+        // 커스텀 오버레이를 생성합니다
+        return new kakao.maps.CustomOverlay({
+            position: position,
+            content: content
+        });
     }
 }
 
