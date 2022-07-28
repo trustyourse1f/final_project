@@ -19,13 +19,14 @@ class KakaoMap {
         }
     }
 
-    add_marker(lat, lng, clickable = false) {
+    add_marker(lat, lng, clickable = false, image = null) {
         var markerPosition  = new kakao.maps.LatLng(lat, lng); 
 
         // 마커를 생성합니다
         return new kakao.maps.Marker({
             position: markerPosition,
-            clickable: clickable
+            clickable: clickable,
+            image: image
         });
     }
 
@@ -77,6 +78,13 @@ class KakaoMap {
                 console.error('없는 주소', address, ind);
             }
         });
+    }
+
+    add_markerImage(src, size, offset) {
+        let imgSize = new kakao.maps.Size(size[0], size[1]);
+        let imgOpt = {offset: new kakao.maps.Point(offset[0], offset[1])};
+
+        return  new kakao.maps.MarkerImage(src, imgSize, imgOpt);
     }
 }
 

@@ -22,7 +22,13 @@ function MapArticle(props) {
             let tmp_map = new KakaoMap('map');
             for(let i=0; i<res.data.length; i++)
             {
-                let mk = tmp_map.add_marker(res.data[i].latitude, res.data[i].longitude, true);
+                let mkimg = null;
+                if(res.data[i].is24) {
+                    mkimg = tmp_map.add_markerImage('/Images/m_r.png', [24, 32], [12, 32]);
+                } else {
+                    mkimg = tmp_map.add_markerImage('/Images/m_b.png', [24, 32], [12, 32]);
+                }
+                let mk = tmp_map.add_marker(res.data[i].latitude, res.data[i].longitude, true, mkimg);
                 tmp_map.deploymarker(mk);
                 let infowindow = `<div class="infowin" id="h${i}">
                                     <h1>${res.data[i].name}</h1>

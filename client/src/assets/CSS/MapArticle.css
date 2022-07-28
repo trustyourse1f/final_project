@@ -20,7 +20,7 @@
 }
 
 .infowin {
-    width: 100%;
+    min-width: 150px;
     background-color: #14130f;
     color: #ffffe3;
 }
