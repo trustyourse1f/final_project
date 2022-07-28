@@ -10,11 +10,12 @@ class Header extends React.Component {
   render() {
     return (
         <header id="header">
-            <h1><img src='/Images/1-logo.png'/>동물병원 예약시스템</h1>
             <nav>
-              <a href="https://github.com/good-jinu/petmily" target="_blank" rel="noopener noreferrer">
-                <img src="/GitHub-Mark-32px.png" className="mark" alt="github"/>
-              </a>
+              <ul>
+                <li><a href="/"><img src='/Images/1-logo.png' className="logo"/></a></li>
+                <li>reservation</li>
+                <li>about us</li>
+              </ul>
             </nav>
         </header>
     );
