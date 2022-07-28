@@ -35,3 +35,18 @@
     margin: 0;
     font-size: 8px;
 }
+
+.gumarker {
+    background-color: white;
+    border-radius: 30px;
+    font-size: 12px;
+    text-align: center;
+    width: 60px;
+    height: 60px;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #20c020;
+}

@@ -43,20 +43,45 @@ function MapArticle(props) {
                 });
             }
 
-            let zoomcbk = (lvl) => {
-                if(lvl > 6) {
-                    mk_lst.forEach((val, ind) => {
-                        tmp_map.deploymarker(val, false);
-                    });
-                } else {
-                    mk_lst.forEach((val) => {
-                        tmp_map.deploymarker(val, true);
-                    })
+            axios({
+                method: 'GET',
+                url: '/guinfo'
+            })
+            .then(res => {
+                let gumarker_lst = [];
+                let gumarker_content = '';
+                for(let i=0; i<res.data.length; i++) {
+                    gumarker_content = `<div class="gumarker">
+                                        <div>${res.data[i].name}</div>
+                                        <div>총: ${res.data[i].total}</div>
+                                        <div>24시: ${res.data[i].Is24}</div></div>`;
+                    gumarker_lst.push(tmp_map.add_customOverlay(res.data[i].latitude, res.data[i].longitude, gumarker_content));
                 }
-            };
-            tmp_map.zoomlevelListener(zoomcbk);
 
-            setKmap(tmp_map);
+                let zoomcbk = (lvl) => {
+                    if(lvl > 6) {
+                        mk_lst.forEach((val) => {
+                            tmp_map.deploymarker(val, false);
+                        });
+                        gumarker_lst.forEach((val) => {
+                            tmp_map.deploymarker(val, true);
+                        });
+                    } else {
+                        mk_lst.forEach((val) => {
+                            tmp_map.deploymarker(val, true);
+                        });
+                        gumarker_lst.forEach((val) => {
+                            tmp_map.deploymarker(val, false);
+                        });
+                    }
+                };
+                tmp_map.zoomlevelListener(zoomcbk);
+    
+                setKmap(tmp_map);
+            })
+            .catch(err => {
+                console.error(err);
+            })
         })
         .catch(err => {
             console.error(err);
