@@ -86,7 +86,7 @@ function Reservation(props) {
                 const clickbtn = (e) => {
                     postData.Time = tstmp;
                     document.querySelectorAll('.time-selection .validbtn').forEach(function(item) {
-                        item.style.backgroundColor = '#e9e9e9'
+                        item.style.backgroundColor = 'white'
                     });
                     e.target.style.backgroundColor = '#10e910';
                 }

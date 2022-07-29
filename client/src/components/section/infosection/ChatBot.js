@@ -28,7 +28,7 @@ function ChatBot(props) {
         </div>);
         chatlog.push(<div className='botmessage'>어떤 아이인가요?</div>);
         get_species().then(res => {
-            chatlog.push(<div className="botmessage">
+            chatlog.push(<div className="botmessage choice-container">
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
                         let pa = e.target.parentElement;
@@ -45,7 +45,7 @@ function ChatBot(props) {
     } else if(chatPhase==2) {
         chatlog.push(<div className='botmessage'>증상종류를 선택해주세요</div>);
         get_symptomCategory().then(res => {
-            chatlog.push(<div className="botmessage">
+            chatlog.push(<div className="botmessage choice-container">
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
                         let pa = e.target.parentElement;
@@ -62,7 +62,7 @@ function ChatBot(props) {
     } else if(chatPhase==4) {
         chatlog.push(<div className='botmessage'>증상을 선택해주세요</div>);
         get_symptoms(postData.symcat).then(res => {
-            chatlog.push(<div className="botmessage">
+            chatlog.push(<div className="botmessage choice-container">
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
                         if(!postData.symptoms.has(item.code)) {
@@ -77,23 +77,25 @@ function ChatBot(props) {
                     };
                     return (<button onClick={clckevent} key={`${index}`}>{item.info}</button>);
                 })}
-                <button onClick={(e) => {
-                    chatlog.push(<div className="usermessage">
-                        <ul>
-                            {Array.from(postData.symptomInfo).map((item, index) => {
-                                return (<li key={`${index}`}>{item}</li>);
-                            })}
-                        </ul>
-                    </div>)
-                    e.target.parentElement.style.display = 'none';
-                    setChatPhase(6);
-                }}>선택 완료</button>
+                <div className="submitbtn-container">
+                    <button onClick={(e) => {
+                        chatlog.push(<div className="usermessage">
+                            <ul>
+                                {Array.from(postData.symptomInfo).map((item, index) => {
+                                    return (<li key={`${index}`}>{item}</li>);
+                                })}
+                            </ul>
+                        </div>)
+                        e.target.parentElement.style.display = 'none';
+                        setChatPhase(6);
+                    }}>선택 완료</button>
+                </div>
             </div>);
             setChatPhase(5);
         });
     } else if(chatPhase==6) {
         chatlog.push(<div className='botmessage'>증상을 더 선택하시겠습니까? 아니면 질병예측을 하시겠습니까?</div>);
-        chatlog.push(<div className='botmessage'>
+        chatlog.push(<div className='botmessage choice-container'>
             <button onClick={e => {
                 e.target.parentElement.style.display='none';
                 setChatPhase(2);

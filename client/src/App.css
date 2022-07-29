@@ -8,12 +8,11 @@ a {
   color: inherit;
 }
 
-.light_mode{
-  background-color: #f4f4f4;
-  color: #1b1b1b;
-}
-
-.dark_mode {
-  background-color: #1b1b1b;
-  color: #f4f4f4;
+button {
+  min-width: 30px;
+  min-height: 25px;
+  padding: 6px 11px;
+  border: 1px solid black;
+  background-color: white;
+  cursor: pointer;
 }
