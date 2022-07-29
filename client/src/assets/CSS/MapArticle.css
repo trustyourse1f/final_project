@@ -36,6 +36,10 @@
     font-size: 8px;
 }
 
+.icon-container > img {
+    width: 16px;
+}
+
 .gumarker {
     background-color: white;
     border-radius: 30px;

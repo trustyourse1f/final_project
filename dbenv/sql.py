@@ -10,7 +10,7 @@ pswd = ''
 conn = pymysql.connect(host = hostname, port = portnum, user='root',password= pswd, db='petmily_db',charset='utf8')
 curs = conn.cursor()
 sql = "insert into hospital_info (HospitalID, name, contract, is24, isBeautyParlor, isHotel, isStore, hasParkingLot, businessHours, latitude, longitude, address, subject, species) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-f = open('./dataset/petraschu.csv','r',encoding='cp949')
+f = open('./dataset/petraschu.csv','r', encoding='utf-8')
 rd = csv.reader(f)
 next(rd)
 for line in rd:

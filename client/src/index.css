@@ -1,8 +1,11 @@
+@font-face {
+  font-family: 'NanumGothic';
+  src: url('./fonts/NanumGothic.ttf') format('truetype'), url('./fonts/NanumGothic.eot') format('embedded-opentype');
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'NanumGothic';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

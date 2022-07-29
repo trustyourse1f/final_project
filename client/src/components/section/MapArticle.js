@@ -33,10 +33,25 @@ function MapArticle(props) {
                 mk_lst.push(mk);
 
                 tmp_map.deploymarker(mk);
+
+                let additional_info = [];
+                if(res.data[i].isBeautyParlor) {
+                    additional_info.push('<img src="/Images/1-scissors.png"/>');
+                }
+                if(res.data[i].isHotel) {
+                    additional_info.push('<img src="/Images/1-hotel.png"/>');
+                }
+                if(res.data[i].isStore) {
+                    additional_info.push('<img src="/Images/1-store.png"/>');
+                }
+                if(res.data[i].hasParkingLot) {
+                    additional_info.push('<img src="/Images/1-parking.png"/>');
+                }
                 let infowindow = `<div class="infowin" id="h${i}">
                                     <h1>${res.data[i].name}</h1>
                                     <div class="infowindesc">${res.data[i].contract}<br/>
                                     ${res.data[i].address}</div>
+                                    <div class="icon-container">${additional_info.join('')}</div>
                                     <button>예약하기</button></div>`;
                 tmp_map.setInfoWindow(mk, infowindow, i, () => {
                     dispatch(setInfo(res.data[i]));
