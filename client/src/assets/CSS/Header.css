@@ -1,5 +1,5 @@
 #header {
-    min-height: 25vh;
+    min-height: 120px;
     overflow: auto;
 }
 
@@ -14,12 +14,12 @@
     justify-content: space-around;
     margin: 0;
     padding: 0;
-    background-color: #20c020;
+    background-color: #ffadd2;
     align-items: center;
-    height: 100px;
+    height: 75px;
+    font-size: 25px;
 }
 
 #header .logo {
-    width: 48px;
-    height: 48ox;
+    width: 75px;
 }

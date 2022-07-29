@@ -1,3 +1,9 @@
+#map {
+    border-width: 5px;
+    border-style: solid;
+    border-color: #ffadd2;
+}
+
 @media screen and (max-width: 480px) {
     #map {
         width: 100%;
@@ -15,14 +21,14 @@
 @media screen and (min-width: 1200px){
     #map {
         width: 750px;
-        height: 700px;
+        height: 600px;
     }
 }
 
 .infowin {
     min-width: 150px;
-    background-color: #14130f;
-    color: #ffffe3;
+    background-color: #ac1a8f;
+    color: white;
 }
 
 .infowin h1 {
