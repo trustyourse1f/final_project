@@ -86,7 +86,7 @@ function ChatBot(props) {
                                 })}
                             </ul>
                         </div>)
-                        e.target.parentElement.style.display = 'none';
+                        e.target.parentElement.parentElement.style.display = 'none';
                         setChatPhase(6);
                     }}>선택 완료</button>
                 </div>
