@@ -18,7 +18,7 @@
 }
 
 .botmessage {
-    background-color: #fbceb1;
+    background-color: #f4f4f4;
     border-radius: 0 20px 20px 0;
     margin: 0 5px 10px 0;
     padding: 7px 3px;
@@ -27,7 +27,7 @@
 }
 
 .usermessage {
-    background-color: #ece6cc;
+    background-color: #fff7ee;
     border-radius: 20px 0 0 20px;
     margin: 0 0 10px 5px;
     padding: 7px 3px;

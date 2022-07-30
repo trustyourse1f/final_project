@@ -94,7 +94,7 @@ function Reservation(props) {
             }
         }
         setTimeSelectionBtns([...timeSelectionBtns]);
-    }, [selectedDate, bsnsHour]);
+    }, [selectedDate, bsnsHour, reservationTable]);
 
     useEffect(() => {
         document.querySelectorAll('.time-selection button').forEach(function(item) {
@@ -127,7 +127,6 @@ function Reservation(props) {
                     placeholder="증상" value={postData.Symptom}/>
                     <button onClick={() => {post_reservation(postData).then(res => {
                         get_reservationtable(props.HospitalID, setReservationTable);
-                        postData.Time = 0;
                     }).catch(err => {
                         console.error(err);
                     });}}>예약하기</button>

@@ -5,6 +5,7 @@
 
 #header nav {
     margin: 20px 0;
+    font-family: 'NanumDongHwaDdoBag';
 }
 
 #header nav > ul {
@@ -14,10 +15,11 @@
     justify-content: space-around;
     margin: 0;
     padding: 0;
-    background-color: #ffadd2;
+    background-color: #3b976d;
+    color: white;
     align-items: center;
     height: 75px;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 #header .logo {

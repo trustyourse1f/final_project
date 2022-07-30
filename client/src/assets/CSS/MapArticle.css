@@ -1,7 +1,6 @@
 #map {
-    border-width: 2px;
-    border-style: solid;
-    border-color: #ffadd2;
+    border: 2px solid lightgray;
+    box-shadow: 0 0 10px lightgray;
 }
 
 @media screen and (max-width: 480px) {

@@ -3,6 +3,11 @@
   src: url('./fonts/NanumGothic.ttf') format('truetype'), url('./fonts/NanumGothic.eot') format('embedded-opentype');
 }
 
+@font-face {
+  font-family: 'NanumDongHwaDdoBag';
+  src: url('./fonts/NanumDongHwaDdoBag.ttf') format('truetype'), url('./fonts/NanumDongHwaDdoBag.eot') format('embedded-opentype');
+}
+
 body {
   margin: 0;
   font-family: 'NanumGothic';
