@@ -5,10 +5,19 @@ import { post_reservation, get_buisnesshour, get_reservationtable } from 'jslib/
 import 'assets/CSS/Calendar.css';
 import 'assets/CSS/Reservation.css';
 
+function getCurrentDate() {
+    let today = new Date();
+    today.setHours(0);
+    today.setMinutes(0);
+    today.setSeconds(0);
+    today.setMilliseconds(0);
+    return today;
+}
+
 function Reservation(props) {
     const st_and_at = useSelector(state => state.selectedInfo.symptoms_animaltype);
     const [bsnsHour, setBsnsHour] = useState({});
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(getCurrentDate());
     const [postData, setPostData] = useState({
         HospitalID: props.HospitalID,
         Customer_name:'',
@@ -21,11 +30,12 @@ function Reservation(props) {
     const [timeSelectionBtns, setTimeSelectionBtns] = useState([]);
 
     useEffect(() => {
-        selectedDate.setHours(0);
-        selectedDate.setMinutes(0);
         get_buisnesshour(props.HospitalID, setBsnsHour);
-        get_reservationtable(props.HospitalID, setReservationTable);
     }, [props.HospitalID]);
+
+    useEffect(() => {
+        get_reservationtable(props.HospitalID, setReservationTable);
+    }, [bsnsHour]);
 
     useEffect(() => {
         timeSelectionBtns.splice(0, timeSelectionBtns.length);
@@ -94,7 +104,7 @@ function Reservation(props) {
             }
         }
         setTimeSelectionBtns([...timeSelectionBtns]);
-    }, [selectedDate, bsnsHour, reservationTable]);
+    }, [selectedDate, reservationTable]);
 
     useEffect(() => {
         document.querySelectorAll('.time-selection button').forEach(function(item) {
