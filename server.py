@@ -1,6 +1,5 @@
  # -- coding: utf-8 --
 from flask import Flask, request, make_response, jsonify, Response
-import os
 from datalib import Symptom_prediction_system, db_guinfo, db_readhospital, db_reservation
 from datalib import mysql_reservation
 from datalib import db_hospital_time
@@ -9,7 +8,7 @@ import urllib
 #db연동
 ht='localhost'
 pt=3306
-pw='48615+'
+pw=''
 
 app = Flask(__name__, static_url_path='/', static_folder='build')
 #축종리스트
@@ -35,6 +34,21 @@ def symptom_select():
     except Exception as e:
         print(e)
         return Response("", status=400)
+
+#검색증상리스트
+@app.route('/searchsymptom', methods=['GET'])
+def searchsymptom_list():
+    try:
+        respon_data=[]
+        question = request.args.get('q')
+        category = request.args.get('category')        
+        symptom_list = Symptom_prediction_system.search_symptom(category,question,Symptom_prediction_system.db_connect(pw))
+        if len(symptom_list) == 0:
+            return Response("",status=400)
+        else:
+            return jsonify(symptom_list)
+    except:
+        return Response("",status=500)
 
 #룰베이스예측시스템
 @app.route('/predict-disease',methods=['POST'])
