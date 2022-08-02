@@ -29,12 +29,12 @@ conn.commit()
 f.close()
 
 ###symptom
-sql = "insert into symptom (Symptom_code, Sorted_Symptom_kor, Sorted_Symptom_eng, Symptom_code_list, Symptom_name, info) values (%s,%s,%s,%s,%s,%s)"
-f = open('./dataset/동물질병 증상분류.csv','r',encoding='cp949')
+sql = "insert into symptom (Symptom_code, Sorted_Symptom_kor, Symptom_code_list, Symptom_name, info) values (%s,%s,%s,%s,%s)"
+f = open('./dataset/동물질병 증상분류.csv','r',encoding='utf-8')
 rd = csv.reader(f)
 next(rd)
 for line in rd:
-    curs.execute(sql, (line[0],line[1],line[2],line[3],line[4],line[5]))
+    curs.execute(sql, (line[0],line[1],line[2],line[3],line[4]))
 conn.commit()
 f.close()
 

@@ -35,7 +35,6 @@ DROP TABLE IF EXISTS symptom;
 CREATE TABLE symptom(
     Symptom_code VARCHAR(15),
     Sorted_Symptom_kor VARCHAR(50),
-    Sorted_Symptom_eng VARCHAR(50),
     Symptom_code_list VARCHAR(50) PRIMARY KEY,
     Symptom_name VARCHAR(255),
     info VARCHAR(50)
