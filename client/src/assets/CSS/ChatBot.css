@@ -35,6 +35,10 @@
     text-align: right;
 }
 
+.choice-container table > tr {
+    vertical-align: top;
+}
+
 .choice-container button{
     display: block;
     margin: 2px 0;
