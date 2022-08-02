@@ -85,16 +85,15 @@ def symptom(category_select,db):
         result_list.append(result_dict)
     return result_list
 # 검색증상리스트
-def search_symptom(category_select,q,db):
+def search_symptom(q,db):
     Symptom_code_list=[]
     info_list=[]
     index=-1
     for i in db:
         index+=1
-        if category_select == i['Sorted_Symptom_kor']:
-            if i['Symptom_code_list'] not in Symptom_code_list:
-                Symptom_code_list.append(i['Symptom_code_list'])
-                info_list.append(db[index]['info'])
+        if i['Symptom_code_list'] not in Symptom_code_list:
+            Symptom_code_list.append(i['Symptom_code_list'])
+            info_list.append(db[index]['info'])
     result_list=[]
     for j in range(len(info_list)):
         if q not in info_list[j]:
