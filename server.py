@@ -29,7 +29,6 @@ def symptom_select():
     try:
         symptom_category_select = request.args.get('category')
         symptom_category_select = urllib.parse.unquote(symptom_category_select)
-        print(symptom_category_select)
         symptom_list = Symptom_prediction_system.symptom(symptom_category_select,Symptom_prediction_system.db_connect(pw))
         return jsonify(symptom_list)
     except Exception as e:
