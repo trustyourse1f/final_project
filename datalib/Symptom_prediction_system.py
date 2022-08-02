@@ -9,10 +9,9 @@ def db_connect(pw):
     for row in c1:
         j_dict = {"Symptom_code":row[0],
                 "Sorted_Symptom_kor":row[1],
-                "Sorted_Symptom_eng":row[2],
-                "Symptom_code_list":row[3],
-                "Symptom_name":row[4],
-                "info":row[5],
+                "Symptom_code_list":row[2],
+                "Symptom_name":row[3],
+                "info":row[4],
                  }        
         result.append(j_dict)   
 
@@ -64,7 +63,7 @@ def select_species():
     return select_specieslist
 #카테고리선택
 def select_category_symptom_list():
-    category_list=['청각기관 증상','심혈관계 증상','소화기계','안과 증상','전신종합 증상','근골격계','신경계 증상','통증 증상','호흡기계 증상','피부/외피계 증상','생식기계 증상','비뇨기계 증상']
+    category_list=['가슴/배', '귀', '꼬리', '눈', '다리/발/발톱', '등/허리', '머리', '목', '배변/배뇨', '생식기', '소화불량', '심장', '일반 증상', '입/턱/치아', '털/피부', '행동', '호흡기계 증상']
     return category_list
 #증상선택
 def symptom(category_select,db):
@@ -86,16 +85,15 @@ def symptom(category_select,db):
         result_list.append(result_dict)
     return result_list
 # 검색증상리스트
-def search_symptom(category_select,q,db):
+def search_symptom(q,db):
     Symptom_code_list=[]
     info_list=[]
     index=-1
     for i in db:
         index+=1
-        if category_select == i['Sorted_Symptom_kor']:
-            if i['Symptom_code_list'] not in Symptom_code_list:
-                Symptom_code_list.append(i['Symptom_code_list'])
-                info_list.append(db[index]['info'])
+        if i['Symptom_code_list'] not in Symptom_code_list:
+            Symptom_code_list.append(i['Symptom_code_list'])
+            info_list.append(db[index]['info'])
     result_list=[]
     for j in range(len(info_list)):
         if q not in info_list[j]:

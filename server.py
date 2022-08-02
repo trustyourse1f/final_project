@@ -35,14 +35,12 @@ def symptom_select():
         print(e)
         return Response("", status=400)
 
-#검색증상리스트
+#전체검색증상리스트
 @app.route('/searchsymptom', methods=['GET'])
 def searchsymptom_list():
     try:
-        respon_data=[]
-        question = request.args.get('q')
-        category = request.args.get('category')        
-        symptom_list = Symptom_prediction_system.search_symptom(category,question,Symptom_prediction_system.db_connect(pw))
+        question = request.args.get('q')      
+        symptom_list = Symptom_prediction_system.search_symptom(question,Symptom_prediction_system.db_connect(pw))
         if len(symptom_list) == 0:
             return Response("",status=400)
         else:
@@ -50,6 +48,30 @@ def searchsymptom_list():
     except:
         return Response("",status=500)
 
+# 검색증상리스트
+# """
+# def search_symptom(category_select,q,db):
+#     Symptom_code_list=[]
+#     info_list=[]
+#     index=-1
+#     for i in db:
+#         index+=1
+#         if category_select == i['Sorted_Symptom_kor']:
+#             if i['Symptom_code_list'] not in Symptom_code_list:
+#                 Symptom_code_list.append(i['Symptom_code_list'])
+#                 info_list.append(db[index]['info'])
+#     result_list=[]
+#     for j in range(len(info_list)):
+#         if q not in info_list[j]:
+#             continue
+#         else:
+#             result_dict={
+#                 'code':Symptom_code_list[j],
+#                 'info':info_list[j]
+#                 }
+#         result_list.append(result_dict)            
+#     return result_list
+# """
 #룰베이스예측시스템
 @app.route('/predict-disease',methods=['POST'])
 def predict_disease():
@@ -133,6 +155,7 @@ def reserve_info_host():
         return Response("", status=500)
 
 #고객예약정보 서버로
+
 @app.route('/reserve', methods=['POST'])
 def insert_data():
     db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
