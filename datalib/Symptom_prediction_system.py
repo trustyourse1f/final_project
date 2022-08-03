@@ -65,26 +65,52 @@ def select_species():
 def select_category_symptom_list():
     category_list=['가슴/배', '귀', '꼬리', '눈', '다리/발/발톱', '등/허리', '머리', '목', '배변/배뇨', '생식기', '소화불량', '심장', '일반 증상', '입/턱/치아', '털/피부', '행동', '호흡기계 증상']
     return category_list
+
 #증상선택
-def symptom(category_select,db):
-    Symptom_code_list=[]
-    info_list=[]
-    index=-1
-    for i in db:
-        index+=1
-        if category_select == i['Sorted_Symptom_kor']:
-            if i['Symptom_code_list'] not in Symptom_code_list:
-                Symptom_code_list.append(i['Symptom_code_list'])
-                info_list.append(db[index]['info'])
+def symptom(db):
     result_list=[]
-    for j in range(len(info_list)):
+    temp=[]
+    index=-1
+    name_list=['가슴/배', '귀', '꼬리', '눈', '다리/발/발톱', '등/허리', '머리', '목', '배변/배뇨', '생식기', '소화불량', '심장', '일반 증상', '입/턱/치아', '털/피부', '행동', '호흡기계 증상']
+    for i in name_list:
+        temp_list=[]
+        for _ in range(60):
+            if index < 404:
+                if i == db[index+1]["Sorted_Symptom_kor"]:
+                    index+=1
+                    temp_dict={
+                        'code':db[index]["Symptom_code_list"],
+                        'info':db[index]["info"]
+                    }
+                    temp_list.append(temp_dict)
         result_dict={
-            'code':Symptom_code_list[j],
-            'info':info_list[j]
-            }
+        'category':i,
+        'symptoms':temp_list
+        }
         result_list.append(result_dict)
     return result_list
-# 검색증상리스트
+
+# #증상선택
+# def symptom(category_select,db):
+#     Symptom_code_list=[]
+#     info_list=[]
+#     index=-1
+#     for i in db:
+#         index+=1
+#         if category_select == i['Sorted_Symptom_kor']:
+#             if i['Symptom_code_list'] not in Symptom_code_list:
+#                 Symptom_code_list.append(i['Symptom_code_list'])
+#                 info_list.append(db[index]['info'])
+#     result_list=[]
+#     for j in range(len(info_list)):
+#         result_dict={
+#             'code':Symptom_code_list[j],
+#             'info':info_list[j]
+#             }
+#         result_list.append(result_dict)
+#     return result_list
+
+# 전체검색증상리스트
 def search_symptom(q,db):
     Symptom_code_list=[]
     info_list=[]
@@ -105,6 +131,31 @@ def search_symptom(q,db):
                 }
         result_list.append(result_dict)            
     return result_list
+
+
+# 검색증상리스트
+# def search_symptom(category_select,q,db):
+#     Symptom_code_list=[]
+#     info_list=[]
+#     index=-1
+#     for i in db:
+#         index+=1
+#         if category_select == i['Sorted_Symptom_kor']:
+#             if i['Symptom_code_list'] not in Symptom_code_list:
+#                 Symptom_code_list.append(i['Symptom_code_list'])
+#                 info_list.append(db[index]['info'])
+#     result_list=[]
+#     for j in range(len(info_list)):
+#         if q not in info_list[j]:
+#             continue
+#         else:
+#             result_dict={
+#                 'code':Symptom_code_list[j],
+#                 'info':info_list[j]
+#                 }
+#         result_list.append(result_dict)            
+#     return result_list
+
 
 #관리자리스트선택목록,사용자선택목록 저장
 # def symptom_selected(Symptom_select,info_list,Symptom_list):  
