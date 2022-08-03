@@ -1,4 +1,3 @@
-from unicodedata import name
 import pandas as pd
 import pymysql
 def db_connect(pw):
