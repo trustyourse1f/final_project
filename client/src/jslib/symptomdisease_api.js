@@ -14,10 +14,10 @@ function get_symptomCategory() {
     })
 }
 
-function get_symptoms(category) {
+function get_symptoms() {
     return axios({
         method: 'GET',
-        url: `/symptom?category=${encodeURIComponent(category)}`
+        url: `/symptom`
     })
     .then(res => {
         return res;
@@ -40,10 +40,10 @@ function get_species() {
     });
 }
 
-function search_symptoms(category, q) {
+function search_symptoms(q) {
     return axios({
         method: 'GET',
-        url: `/symptom?category=${encodeURIComponent(category)}&q=${encodeURIComponent(q)}`
+        url: `/searchsymptom?q=${encodeURIComponent(q)}`
     })
     .then(res => {
         return res;

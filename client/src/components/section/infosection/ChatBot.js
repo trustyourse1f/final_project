@@ -15,54 +15,41 @@ function ChatBot(props) {
     });
 
     const [searchStr, setSearchStr] = useState('');
+    const [autoComplete, setAutoComplete] = useState([]);
+
+    function searchautocomplete() {
+        if(searchStr === '') {
+            setAutoComplete([]);
+        } else {
+            search_symptoms(searchStr).then(res => {
+                console.log(res.data);
+                let tmp = [];
+                res.data.map((item, index) => {
+                    let clckevent = (e) => {
+                        if(!postData.symptoms.has(item.code)) {
+                            postData.symptoms.add(item.code);
+                            postData.symptomInfo.add(item.info);
+                        }
+                    }
+                    tmp.push(<button key={`${index}`} onClick={clckevent}>{item.info}</button>);
+                });
+                setAutoComplete(tmp);
+            });
+        }
+    }
+
+    useEffect(() => {
+        if(chatPhase === 3) {
+            searchautocomplete();
+        }
+    }, [searchStr]);
 
     function resetChat() {
         postData.species = '';
         postData.symptoms = new Set();
+        postData.symptomInfo = new Set();
         chatlog.splice(0, chatlog.length);
         setChatPhase(0);
-    }
-
-    function tablelistmapping(data) {
-        let result = []
-        for(let i=0; i<data.length; i+=2) {
-            let clckevent1 = (e) => {
-                if(!postData.symptoms.has(data[i].code)) {
-                    postData.symptoms.add(data[i].code);
-                    postData.symptomInfo.add(data[i].info);
-                    e.target.style.backgroundColor = '#10e910';
-                } else if(postData.symptoms.has(data[i].code)) {
-                    postData.symptoms.delete(data[i].code);
-                    postData.symptomInfo.delete(data[i].info);
-                    e.target.removeAttribute("style");
-                }
-            };
-            let i1 = (<td><button onClick={clckevent1} key={`${i}`}>{data[i].info}</button></td>);
-
-            let i2 = (<td></td>);
-
-            if(i+1 < data.length) {
-                let clckevent2 = (e) => {
-                    if(!postData.symptoms.has(data[i + 1].code)) {
-                        postData.symptoms.add(data[i + 1].code);
-                        postData.symptomInfo.add(data[i + 1].info);
-                        e.target.style.backgroundColor = '#10e910';
-                    } else if(postData.symptoms.has(data[i + 1].code)) {
-                        postData.symptoms.delete(data[i + 1].code);
-                        postData.symptomInfo.delete(data[i + 1].info);
-                        e.target.removeAttribute("style");
-                    }
-                }
-                i2 = (<td><button onClick={clckevent2} key={`${i+1}`}>{data[i+1].info}</button></td>);
-            }
-
-            result.push(<tr>
-                {i1}
-                {i2}
-            </tr>);
-        }
-
-        return result;
     }
 
     if(chatPhase==0) {
@@ -78,7 +65,7 @@ function ChatBot(props) {
                         let pa = e.target.parentElement;
                         pa.style.display='none';
                         postData.species = item;
-                        chatlog.push(<div className="usermessage">{item}</div>);
+                        chatlog.push(<div className="rightalign"><div className="usermessage">{item}</div></div>);
                         setChatPhase(2);
                     }
                     return (<button onClick={clckevent} key={`${index}`}>{item}</button>)
@@ -87,64 +74,61 @@ function ChatBot(props) {
             setChatPhase(1);
         })
     } else if(chatPhase==2) {
-        chatlog.push(<div className='botmessage'>증상종류를 선택해주세요</div>);
-        get_symptomCategory().then(res => {
+        chatlog.push(<div className='botmessage'>증상을 선택해주세요</div>);
+        get_symptoms().then(res => {
             chatlog.push(<div className="botmessage choice-container">
                 {res.data.map((item, index) => {
                     let clckevent = (e) => {
-                        let pa = e.target.parentElement;
-                        pa.style.display='none';
-                        postData.symcat = item;
-                        chatlog.push(<div className="usermessage">{item}</div>);
-                        setChatPhase(4);
-                    }
-                    return (<button onClick={clckevent} key={`${index}`}>{item}</button>);
+                        let containerTarget = e.target.parentElement.getElementsByClassName('symptoms-container')[0];
+                        if(containerTarget.style.display === 'block') {
+                            containerTarget.style.display = 'none';
+                            e.target.style.backgroundColor = null;
+                        } else {
+                            containerTarget.style.display = 'block';
+                            e.target.style.backgroundColor = '#a6a6a6';
+                        }
+                    };
+
+                    return (<div className='category-container'>
+                                <button onClick={clckevent} key={`${index}`}>{item.category}</button>
+                                <div className='symptoms-container' style={{display: 'none'}}>
+                                    {item.symptoms.map((item1, index1) => {
+                                        let clckevent2 = (e) => {
+                                            if(postData.symptoms.has(item1.code)) {
+                                                e.target.style.backgroundColor = null;
+                                                postData.symptoms.delete(item1.code);
+                                                postData.symptomInfo.delete(item1.info);
+                                            } else {
+                                                e.target.style.backgroundColor = '#a6a6a6';
+                                                postData.symptoms.add(item1.code);
+                                                postData.symptoms.add(item1.info);
+                                            }
+                                        };
+                                        return (<button key={`${index1}`} onClick={clckevent2}>{item1.info}</button>);
+                                    })}
+                                </div>
+                            </div>);
                 })}
+            </div>);
+
+            let clckevent = (e) => {
+                chatlog.pop();
+                chatlog.pop();
+                chatlog.push(<div className="usermessage">
+                    <ul>
+                        {Array.from(postData.symptomInfo).map((item, index) => {
+                            return(<li key={`${index}`}>{item}</li>);
+                        })}
+                    </ul>
+                </div>)
+                setChatPhase(8);
+            };
+
+            chatlog.push(<div className="botmessage choice-container">
+                <button onClick={clckevent}>진단하기</button>
             </div>);
             setChatPhase(3);
         })
-    } else if(chatPhase==4) {
-        chatlog.push(<div className='botmessage'>증상을 선택해주세요</div>);
-        get_symptoms(postData.symcat).then(res => {
-            chatlog.push(<div className="botmessage choice-container">
-                <table>
-                {tablelistmapping(res.data)}
-                </table>
-                <div className="submitbtn-container">
-                    <div className="searchbox">
-                        <input type="text" placeholder='증상 검색' onChange={(e) => {
-                            setSearchStr(e.target.value);
-                        }}/>
-                        <button>검색</button>
-                    </div>
-                    <button onClick={(e) => {
-                        chatlog.push(<div className="usermessage">
-                            <ul>
-                                {Array.from(postData.symptomInfo).map((item, index) => {
-                                    return (<li key={`${index}`}>{item}</li>);
-                                })}
-                            </ul>
-                        </div>)
-                        e.target.parentElement.parentElement.style.display = 'none';
-                        setChatPhase(6);
-                    }}>선택 완료</button>
-                </div>
-            </div>);
-            setChatPhase(5);
-        });
-    } else if(chatPhase==6) {
-        chatlog.push(<div className='botmessage'>증상을 더 선택하시겠습니까? 아니면 질병예측을 하시겠습니까?</div>);
-        chatlog.push(<div className='botmessage choice-container'>
-            <button onClick={e => {
-                e.target.parentElement.style.display='none';
-                setChatPhase(2);
-            }}>추가 증상 선택</button>
-            <button onClick={e => {
-                e.target.parentElement.style.display='none';
-                setChatPhase(8);
-            }}>질병예측</button>
-        </div>);
-        setChatPhase(7);
     } else if(chatPhase==8) {
         chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.</div>);
         chatlog.push(<div className='botmessage'>해당결과는 공공데이터포털-동물질병데이터를 기반으로 제공되는 단순참고 정보입니다.
@@ -152,6 +136,7 @@ function ChatBot(props) {
         dispatch(setSymptomsAnimaltype({
             Symptom: Array.from(postData.symptomInfo).join(', '),
             AnimalType: postData.species}));
+        
         post_predictDisease(Array.from(postData.symptoms), postData.species).then(res => {
             chatlog.push(<div className='botmessage'>
                 <ol>
@@ -164,6 +149,10 @@ function ChatBot(props) {
             setChatPhase(9);
         })
     }
+    useEffect(() => {
+        let ele = document.getElementsByClassName('chatscreen')[0];
+        ele.scrollTop = ele.scrollHeight;
+    }, [chatPhase]);
     
     return (
         <div className='chatwin'>
@@ -173,7 +162,13 @@ function ChatBot(props) {
                 </div>
             </div>
             <div className='system-btn-table'>
-                <button onClick={resetChat}>reset</button>
+                <button onClick={resetChat}>초기화</button>
+                <div className='symptom-searchbox'>
+                    <input type='text' placeholder='증상 검색' onChange={(e) => {setSearchStr(e.target.value)}}/>
+                </div>
+            </div>
+            <div className='symptom-autocomplete'>
+                {autoComplete}
             </div>
         </div>
     );
