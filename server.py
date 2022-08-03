@@ -3,6 +3,7 @@ from flask import Flask, request, make_response, jsonify, Response
 from datalib import Symptom_prediction_system, db_guinfo, db_readhospital, db_reservation
 from datalib import mysql_reservation
 from datalib import db_hospital_time
+from datalib import distance
 import pymysql
 import urllib
 #db연동
@@ -58,6 +59,24 @@ def searchsymptom_list():
     except:
         return Response("",status=500)
 
+#GPS정보기반 가까운 업체리스트
+@app.route('/distance', methods=['POST','GET'])
+def hospital_distance():
+    try:
+        if request.method == 'POST':
+            hospital_gps = request.get_json()
+            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],db_conn)
+            return jsonify(result)
+        else:
+            db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
+            latitude=request.args.get('latitude')
+            longitude=request.args.get('longitude')
+            result = distance.distance_hospital(latitude,longitude,db_conn)
+            return jsonify(result)    
+    except Exception as e:
+        print(e)
+        return Response("",status=500)
+        
 
 #룰베이스예측시스템
 @app.route('/predict-disease',methods=['POST'])
@@ -65,11 +84,14 @@ def predict_disease():
     try:
         db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
         symptom_data = request.get_json()
-        result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
-        return jsonify(result_predict_disease)
+        if len(symptom_data) == 0:
+            return Response("", status=400)
+        else:    
+            result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
+            return jsonify(result_predict_disease)
     except Exception as e:
         print(e)
-        return Response("", status=400)
+        return Response("", status=500)
 
 
 #구정보 전송
