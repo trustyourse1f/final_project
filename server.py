@@ -59,19 +59,21 @@ def searchsymptom_list():
     except:
         return Response("",status=500)
 
-#GPS정보기반 가까운 업체리스트
+#위치(모바일GPS)정보기반 가까운 업체리스트
 @app.route('/distance', methods=['POST','GET'])
 def hospital_distance():
     try:
         if request.method == 'POST':
             hospital_gps = request.get_json()
-            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],db_conn)
+            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],hospital_gps["search-range"],hospital_gps["search-hospital"],db_conn)
             return jsonify(result)
         else:
             db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
             latitude=request.args.get('latitude')
             longitude=request.args.get('longitude')
-            result = distance.distance_hospital(latitude,longitude,db_conn)
+            search_range = request.args.get('search-range')
+            search_hospital = request.args.get('search-hospital')
+            result = distance.distance_hospital(latitude,longitude,search_range,search_hospital,db_conn)
             return jsonify(result)    
     except Exception as e:
         print(e)
@@ -92,6 +94,21 @@ def predict_disease():
     except Exception as e:
         print(e)
         return Response("", status=500)
+
+#예측질병정의
+@app.route('/predict-disease-definition',methods=['POST'])
+def predict_disease_definition():
+    try:
+        db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
+        disease_data = request.get_json()
+        if len(disease_data) == 0:
+            return Response("", status=400)
+        else:    
+            result_predict_disease_definition = Symptom_prediction_system.predict_disease_Definition(disease_data,Symptom_prediction_system.disease_pretreatment(db_conn))
+            return jsonify(result_predict_disease_definition)
+    except Exception as e:
+        print(e)
+        return Response("", status=500)        
 
 
 #구정보 전송
