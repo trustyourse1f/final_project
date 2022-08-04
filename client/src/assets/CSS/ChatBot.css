@@ -1,31 +1,35 @@
 .chatwrapper {
     display: flex;
-    flex: 1;
+    flex: 1 1 auto;
     flex-direction: column;
     justify-content: start;
     align-items: start;
-    min-height: 0px;
-    height: 570px;
+    overflow-y: auto;
 }
 
 .chatwin {
     background-color: #c8eadb;
     font-size: 14px;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+}
+
+.chatwin * {
+    font-weight: 700;
 }
 
 .chatwin button {
     background-color: #d9d9d9;
     font-size: 14px;
+    border: none;
 }
 
 .chatscreen {
     width: 100%;
-    overflow-y: auto;
 }
 
-.chatscreen * {
-    font-weight: 700;
-}
+
 
 .botmessage {
     background-color: #f4f4f4;
@@ -58,11 +62,38 @@
 .choice-container button{
     display: block;
     margin: 2px 0;
-    border: none;
 }
 
-.submitbtn-container {
-    border-top: 1px solid gray;
-    margin-top: 5px;
-    padding-top: 10px;
+.symptoms-container {
+    padding-left: 20px;
+}
+
+.symptoms-container button{
+    padding: 0 2px;
+    margin: 2px 0;
+}
+
+.system-btn-table {
+    flex: 0 1 32px;
+    display: flex;
+    flex-direction: row;
+}
+
+.system-btn-table :nth-child(1) {
+    flex: 0 1 auto;
+}
+
+.system-btn-table :nth-child(2) {
+    flex: 1 1 auto;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+.symptom-autocomplete {
+    background-color: white;
+    flex: 0 1 auto;
+    max-height: 180px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 }

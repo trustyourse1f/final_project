@@ -16,24 +16,45 @@ function ChatBot(props) {
 
     const [searchStr, setSearchStr] = useState('');
     const [autoComplete, setAutoComplete] = useState([]);
+    const [autoSemaphore, setAutoSemaphore] = useState([0]);
 
     function searchautocomplete() {
         if(searchStr === '') {
             setAutoComplete([]);
         } else {
+            autoSemaphore[0] += 1;
+            let prev = autoSemaphore[0];
             search_symptoms(searchStr).then(res => {
-                console.log(res.data);
                 let tmp = [];
                 res.data.map((item, index) => {
                     let clckevent = (e) => {
-                        if(!postData.symptoms.has(item.code)) {
+                        let symptarget = document.getElementsByClassName(item.code);
+                        if(postData.symptoms.has(item.code)) {
+                            Array.from(symptarget).forEach((el) => {
+                                el.style.backgroundColor = null;
+                            });
+                            postData.symptoms.delete(item.code);
+                            postData.symptomInfo.delete(item.info);
+                        } else {
+                            Array.from(symptarget).forEach((el) => {
+                                el.style.backgroundColor = '#a6a6a6';
+                            });
                             postData.symptoms.add(item.code);
                             postData.symptomInfo.add(item.info);
                         }
                     }
-                    tmp.push(<button key={`${index}`} onClick={clckevent}>{item.info}</button>);
+
+                    if(postData.symptoms.has(item.code)) {
+                        tmp.push(<button className={item.code} key={`${index}`} onClick={clckevent} style={{backgroundColor: '#a6a6a6'}}>
+                            {item.info}</button>);
+                    } else {
+                        tmp.push(<button className={item.code} key={`${index}`} onClick={clckevent}>{item.info}</button>);
+                    }
                 });
-                setAutoComplete(tmp);
+
+                if(autoSemaphore[0] <= prev) {
+                    setAutoComplete(tmp);
+                }
             });
         }
     }
@@ -74,6 +95,7 @@ function ChatBot(props) {
             setChatPhase(1);
         })
     } else if(chatPhase==2) {
+        document.querySelector('.system-btn-table :nth-child(2)').disabled = false;
         chatlog.push(<div className='botmessage'>증상을 선택해주세요</div>);
         get_symptoms().then(res => {
             chatlog.push(<div className="botmessage choice-container">
@@ -94,17 +116,28 @@ function ChatBot(props) {
                                 <div className='symptoms-container' style={{display: 'none'}}>
                                     {item.symptoms.map((item1, index1) => {
                                         let clckevent2 = (e) => {
+                                            let symptarget = document.getElementsByClassName(item1.code);
                                             if(postData.symptoms.has(item1.code)) {
-                                                e.target.style.backgroundColor = null;
+                                                Array.from(symptarget).forEach((el) => {
+                                                    el.style.backgroundColor = null;
+                                                });
                                                 postData.symptoms.delete(item1.code);
                                                 postData.symptomInfo.delete(item1.info);
                                             } else {
-                                                e.target.style.backgroundColor = '#a6a6a6';
+                                                Array.from(symptarget).forEach((el) => {
+                                                    el.style.backgroundColor = '#a6a6a6';
+                                                });
                                                 postData.symptoms.add(item1.code);
-                                                postData.symptoms.add(item1.info);
+                                                postData.symptomInfo.add(item1.info);
                                             }
                                         };
-                                        return (<button key={`${index1}`} onClick={clckevent2}>{item1.info}</button>);
+
+                                        if(postData.symptoms.has(item1.code)) {
+                                            return (<button id={item1.code} key={`${index1}`} onClick={clckevent2}style={{backgroundColor: '#a6a6a6'}}>
+                                                {item1.info}</button>);
+                                        } else {
+                                            return (<button className={item1.code} key={`${index1}`} onClick={clckevent2}>{item1.info}</button>);
+                                        }
                                     })}
                                 </div>
                             </div>);
@@ -112,16 +145,20 @@ function ChatBot(props) {
             </div>);
 
             let clckevent = (e) => {
-                chatlog.pop();
-                chatlog.pop();
-                chatlog.push(<div className="usermessage">
-                    <ul>
-                        {Array.from(postData.symptomInfo).map((item, index) => {
-                            return(<li key={`${index}`}>{item}</li>);
-                        })}
-                    </ul>
-                </div>)
-                setChatPhase(8);
+                if(postData.symptoms.size > 0) {
+                    document.querySelector('.system-btn-table :nth-child(2)').disabled = true;
+                    chatlog.pop();
+                    chatlog.pop();
+                    chatlog.push(<div className="rightalign"><div className="usermessage">
+                        선택증상:
+                        <ul>
+                            {Array.from(postData.symptomInfo).map((item, index) => {
+                                return(<li key={`${index}`}>{item}</li>);
+                            })}
+                        </ul>
+                    </div></div>);
+                    setChatPhase(8);
+                }
             };
 
             chatlog.push(<div className="botmessage choice-container">
@@ -145,8 +182,10 @@ function ChatBot(props) {
                     })}
                 </ol>
             </div>);
-            chatlog.push(<div className='botmessage'>증상이 저장되었습니다.</div>);
+            chatlog.push(<div className='botmessage'>증상이 저장되었습니다.<br/>
+                저장된 증상정보는 예약시 활용이 가능합니다</div>);
             setChatPhase(9);
+            setAutoComplete([]);
         })
     }
     useEffect(() => {
@@ -161,14 +200,12 @@ function ChatBot(props) {
                     {chatlog}
                 </div>
             </div>
+            <div className='symptom-autocomplete symptoms-container'>
+                {autoComplete}
+            </div>
             <div className='system-btn-table'>
                 <button onClick={resetChat}>초기화</button>
-                <div className='symptom-searchbox'>
-                    <input type='text' placeholder='증상 검색' onChange={(e) => {setSearchStr(e.target.value)}}/>
-                </div>
-            </div>
-            <div className='symptom-autocomplete'>
-                {autoComplete}
+                <input type='text' placeholder='증상 검색' onChange={(e) => {setSearchStr(e.target.value)}} disabled/>
             </div>
         </div>
     );
