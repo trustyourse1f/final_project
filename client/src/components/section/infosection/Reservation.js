@@ -148,22 +148,37 @@ function Reservation(props) {
                     height: '12px'}}/> 예약불가
                     </div>
                     <div className="userinfo-input-container">
-                        <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
-                        placeholder="이름" value={postData.Customer_name}/>
-                        <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
-                        placeholder="전화번호" value={postData.Customer_number}/>
-                        <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
-                        placeholder="동물종류" value={postData.AnimalType}/>
-                        <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
-                        placeholder="증상" value={postData.Symptom}/>
-                        <textarea onChange={(e) => {postData.AdditionalInfo = e.target.value; setPostData({...postData});}}
-                        placeholder="추가 전달 사항" value={postData.AdditionalInfo}/>
-                        <button onClick={() => {post_reservation(postData).then(res => {
-                            get_reservationtable(props.HospitalID, setReservationTable);
-                        }).catch(err => {
-                            window.alert("예약을 실패했습니다!");
-                        });}}>예약하기</button>
+                        <div className='userinfo-input'>
+                            <label for="userinput0">아이 이름</label>
+                            <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
+                            placeholder="이름" value={postData.Customer_name} id="userinput0"/>
+                        </div>
+                        <div className='userinfo-input'>
+                            <label for="userinput1">전화번호</label>
+                            <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
+                            placeholder="전화번호" value={postData.Customer_number} id="userinput1"/>
+                        </div>
+                        <div className='userinfo-input'>
+                            <label for="userinput2">{'종 (예: 강아지)'}</label>
+                            <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
+                            placeholder="종" value={postData.AnimalType} id="userinput2"/>
+                        </div>
+                        <div className='userinfo-input'>
+                            <label for="userinput3">주요 증상</label>
+                            <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
+                            placeholder="증상" value={postData.Symptom} id="userinput3"/>
+                        </div>
+                        <div className='userinfo-input'>
+                            <label for="userinput4">추가 전달 사항</label>
+                            <textarea onChange={(e) => {postData.AdditionalInfo = e.target.value; setPostData({...postData});}}
+                            placeholder="추가 전달 사항" value={postData.AdditionalInfo} id="userinput4"/>
+                        </div>
                     </div>
+                    <button onClick={() => {post_reservation(postData).then(res => {
+                        get_reservationtable(props.HospitalID, setReservationTable);
+                    }).catch(err => {
+                        window.alert("예약을 실패했습니다!");
+                    });}} className="reserve-button">예약하기</button>
                 </div>
             </div>
         </div>
