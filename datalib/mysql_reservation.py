@@ -4,13 +4,13 @@ import pandas as pd
 
 ###--- 받은 데이터 mysql에 저장
 
-def reservation_save(HospitalID, Customer_name, Customer_number, AnimalType, Symptom, Time, conn):
+def reservation_save(HospitalID, Customer_name, Customer_number, AnimalType, Symptom, Time,AdditionalInfo, conn):
     hostname = ''
     portnum = 3306
     pswd = ''
     curs = conn.cursor()
-    sql = "insert into reservation (Hospital_ID, Customer_name, Customer_number, AnimalType, Symptom, Time) values (%s,%s,%s,%s,%s,%s)"
-    curs.execute(sql, (HospitalID, Customer_name, Customer_number, AnimalType, Symptom, Time))
+    sql = "insert into reservation (Hospital_ID, Customer_name, Customer_number, AnimalType, Symptom, Time, AdditionalInfo) values (%s,%s,%s,%s,%s,%s,%s)"
+    curs.execute(sql, (HospitalID, Customer_name, Customer_number, AnimalType, Symptom, Time, AdditionalInfo))
     conn.commit()
 
 

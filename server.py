@@ -191,7 +191,7 @@ def insert_data():
             hospitalid_time = db_reservation.user_reservation(db_conn,data['HospitalID'])
             print(hospitalid_time)
             if len(hospitalid_time) < 1:
-                mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'],data['AdditionalInfo'], db_conn)
                 db_conn.close()
                 return Response("", status=200)
             else:
