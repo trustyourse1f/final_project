@@ -187,7 +187,8 @@ def admin_list(admin_select_list,db):
                 j=j.strip().replace(" ","")
                 symptom_name.append(j)
         else:
-            symptom_name.append(i)
+            k=i.replace(" ","")
+            symptom_name.append(k)
     return symptom_name
 #증상예측
 def disease_prediction(admin_select_list,select_species,disease_pretreatment):
@@ -234,6 +235,23 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
                 break
         return result_list
 
+def predict_disease_Definition(diseaselist,disease_pretreatment):
+    result_list = []
+    disease_df = disease_pretreatment
+    for i in diseaselist:
+        if i in disease_df['Disease_name']:
+            disease_info = disease_df[disease_df['Disease_name']==i].iloc
+            disease_definition = disease_info[0]["Definition"]
+            result_dict={
+                "disease_name":i,
+                "disease_definition":disease_definition
+            }
+            result_list.append(result_dict)
+    return result_list
+
+
+# if __name__ == '__main__':
+#     print(admin_list(['c025','c030','c035','c040'],db_connect('48615+')))
 
 # print(symptom('생식기계 증상',db_connect('48615+'))[1])
 # print([symptom_selected('포피가 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('포경',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('음경이 뜨거워요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1],symptom_selected('발기가 풀리지 않아요',symptom('생식기계 증상',db_connect('48615+'))[0],symptom('생식기계 증상',db_connect('48615+'))[1])[1]])

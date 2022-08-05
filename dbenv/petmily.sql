@@ -28,6 +28,7 @@ CREATE TABLE reservation(
     AnimalType VARCHAR(3),
     Symptom VARCHAR(255),
     Time BIGINT(20) unsigned,
+    AdditionalInfo VARCHAR(255),
     FOREIGN KEY(Hospital_ID) REFERENCES hospital_info(HospitalID)
 );
 

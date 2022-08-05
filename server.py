@@ -3,6 +3,7 @@ from flask import Flask, request, make_response, jsonify, Response
 from datalib import Symptom_prediction_system, db_guinfo, db_readhospital, db_reservation
 from datalib import mysql_reservation
 from datalib import db_hospital_time
+from datalib import distance
 import pymysql
 import urllib
 #db연동
@@ -58,6 +59,26 @@ def searchsymptom_list():
     except:
         return Response("",status=500)
 
+#위치(모바일GPS)정보기반 가까운 업체리스트
+@app.route('/distance', methods=['POST','GET'])
+def hospital_distance():
+    try:
+        if request.method == 'POST':
+            hospital_gps = request.get_json()
+            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],hospital_gps["search-range"],hospital_gps["search-hospital"],db_conn)
+            return jsonify(result)
+        else:
+            db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
+            latitude=request.args.get('latitude')
+            longitude=request.args.get('longitude')
+            search_range = request.args.get('search-range')
+            search_hospital = request.args.get('search-hospital')
+            result = distance.distance_hospital(latitude,longitude,search_range,search_hospital,db_conn)
+            return jsonify(result)    
+    except Exception as e:
+        print(e)
+        return Response("",status=500)
+        
 
 #룰베이스예측시스템
 @app.route('/predict-disease',methods=['POST'])
@@ -65,11 +86,29 @@ def predict_disease():
     try:
         db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
         symptom_data = request.get_json()
-        result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
-        return jsonify(result_predict_disease)
+        if len(symptom_data) == 0:
+            return Response("", status=400)
+        else:    
+            result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
+            return jsonify(result_predict_disease)
     except Exception as e:
         print(e)
-        return Response("", status=400)
+        return Response("", status=500)
+
+#예측질병정의
+@app.route('/predict-disease-definition',methods=['POST'])
+def predict_disease_definition():
+    try:
+        db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
+        disease_data = request.get_json()
+        if len(disease_data) == 0:
+            return Response("", status=400)
+        else:    
+            result_predict_disease_definition = Symptom_prediction_system.predict_disease_Definition(disease_data,Symptom_prediction_system.disease_pretreatment(db_conn))
+            return jsonify(result_predict_disease_definition)
+    except Exception as e:
+        print(e)
+        return Response("", status=500)        
 
 
 #구정보 전송
@@ -152,7 +191,7 @@ def insert_data():
             hospitalid_time = db_reservation.user_reservation(db_conn,data['HospitalID'])
             print(hospitalid_time)
             if len(hospitalid_time) < 1:
-                mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'],data['AdditionalInfo'], db_conn)
                 db_conn.close()
                 return Response("", status=200)
             else:
