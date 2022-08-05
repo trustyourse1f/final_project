@@ -65,15 +65,15 @@ def hospital_distance():
     try:
         if request.method == 'POST':
             hospital_gps = request.get_json()
-            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],hospital_gps["search-range"],hospital_gps["search-hospital"],db_conn)
+            result = distance.distance_hospital(hospital_gps["latitude"],hospital_gps["longitude"],db_conn)
             return jsonify(result)
         else:
             db_conn = pymysql.connect(host=ht, port=pt, user='root', passwd=pw, db='petmily_db')
             latitude=request.args.get('latitude')
             longitude=request.args.get('longitude')
-            search_range = request.args.get('search-range')
-            search_hospital = request.args.get('search-hospital')
-            result = distance.distance_hospital(latitude,longitude,search_range,search_hospital,db_conn)
+            # search_range = request.args.get('search-range')
+            # search_hospital = request.args.get('search-hospital')
+            result = distance.distance_hospital(latitude,longitude,db_conn)
             return jsonify(result)    
     except Exception as e:
         print(e)
