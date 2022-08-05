@@ -14,6 +14,7 @@ function post_reservation(req_data) {
     })
     .catch(err => {
         console.error(err);
+        throw err;
     })
 }
 

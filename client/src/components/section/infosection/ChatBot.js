@@ -65,6 +65,15 @@ function ChatBot(props) {
         }
     }, [searchStr]);
 
+    useEffect(() => {
+        let target = document.getElementsByClassName('symptom-autocomplete')[0];
+        if (autoComplete.length === 0) {
+            target.style.height = '0';
+        } else {
+            target.style.height = '250px';
+        }
+    }, [autoComplete])
+
     function resetChat() {
         postData.species = '';
         postData.symptoms = new Set();

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Calendar from 'react-calendar';
+import moment from 'moment';
 import { post_reservation, get_buisnesshour, get_reservationtable } from 'jslib/reservation_api';
 import 'assets/CSS/Calendar.css';
 import 'assets/CSS/Reservation.css';
@@ -91,16 +92,19 @@ function Reservation(props) {
             selectedDate.setMinutes(minute);
             const tstmp = selectedDate.getTime();
             if(reservationTable.includes(tstmp)) {
-                timeSelectionBtns.push(<button className="invalidbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
+                timeSelectionBtns.push(<div><button className="invalidbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button></div>);
             } else {
                 const clickbtn = (e) => {
                     postData.Time = tstmp;
                     document.querySelectorAll('.time-selection .validbtn').forEach(function(item) {
-                        item.style.backgroundColor = 'white'
+                        item.style.backgroundColor = null
+                        item.style.color = null;
                     });
-                    e.target.style.backgroundColor = '#10e910';
+                    e.target.style.backgroundColor = '#0095df';
+                    e.target.style.color = 'white';
                 }
-                timeSelectionBtns.push(<button onClick={clickbtn} className="validbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button>);
+                timeSelectionBtns.push(<div><button onClick={clickbtn} className="validbtn">
+                    {`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button></div>);
             }
         }
         setTimeSelectionBtns([...timeSelectionBtns]);
@@ -113,33 +117,50 @@ function Reservation(props) {
     }, [timeSelectionBtns]);
     
     return (
-        <div>
-            <button onClick={props.closeBtn}>X</button>
-            <h1>{props.name}</h1>
-            <div className="calendar-container">
-                <Calendar onChange={setSelectedDate}/>
+        <div className="reservewin">
+            <div className='reserve-header'>
+                <h1>{props.name}</h1>
+                <button onClick={props.closeBtn}>X</button>
             </div>
-            <div className="time-selection-container">
-                <h1>
-                    {`${selectedDate.getFullYear()}년 ${selectedDate.getMonth() + 1}월 ${selectedDate.getDate()}일`}
-                </h1>
-                <div className="time-selection">
-                    {timeSelectionBtns}
+            <div className='reserve-section'>
+                <div className="calendar-container">
+                    <h1>날짜 선택</h1>
+                    <Calendar onChange={setSelectedDate} formatDay={(locale, date) => moment(date).format("D")}
+                    formatMonthYear={(locale,date) => moment(date).format('YYYY.MM')}/>
                 </div>
-                <div className="userinfo-input-container">
-                    <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
-                    placeholder="이름" value={postData.Customer_name}/>
-                    <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
-                    placeholder="전화번호" value={postData.Customer_number}/>
-                    <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
-                    placeholder="동물종류" value={postData.AnimalType}/>
-                    <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
-                    placeholder="증상" value={postData.Symptom}/>
-                    <button onClick={() => {post_reservation(postData).then(res => {
-                        get_reservationtable(props.HospitalID, setReservationTable);
-                    }).catch(err => {
-                        console.error(err);
-                    });}}>예약하기</button>
+                <div className="time-selection-container">
+                    <h1>
+                        시간선택 &emsp;
+                        <span style={{fontSize: '10px'}}>{moment(selectedDate.getTime()).format('M월 D일 (ddd)')}</span>
+                    </h1>
+                    <div className="time-selection">
+                        {timeSelectionBtns}
+                    </div>
+                    <div className="time-selection-desc">
+                        <div style={{backgroundColor: '#e5f4fb',
+                    display: 'inline-block',
+                    width: '12px',
+                    height: '12px'}}/> 예약가능 &nbsp; &nbsp;
+                        <div style={{backgroundColor: '#7f7f7f',
+                    display: 'inline-block',
+                    width: '12px',
+                    height: '12px'}}/> 예약불가
+                    </div>
+                    <div className="userinfo-input-container">
+                        <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
+                        placeholder="이름" value={postData.Customer_name}/>
+                        <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
+                        placeholder="전화번호" value={postData.Customer_number}/>
+                        <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
+                        placeholder="동물종류" value={postData.AnimalType}/>
+                        <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
+                        placeholder="증상" value={postData.Symptom}/>
+                        <button onClick={() => {post_reservation(postData).then(res => {
+                            get_reservationtable(props.HospitalID, setReservationTable);
+                        }).catch(err => {
+                            window.alert("예약을 실패했습니다!");
+                        });}}>예약하기</button>
+                    </div>
                 </div>
             </div>
         </div>
