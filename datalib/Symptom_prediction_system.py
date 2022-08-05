@@ -75,7 +75,7 @@ def symptom(db):
     for i in name_list:
         temp_list=[]
         for _ in range(60):
-            if index < 404:
+            if index < 390:
                 if i == db[index+1]["Sorted_Symptom_kor"]:
                     index+=1
                     temp_dict={
