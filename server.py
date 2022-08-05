@@ -199,7 +199,7 @@ def insert_data():
                 for i in hospitalid_time:
                     time_temp.append(i)
                 if data['Time'] not in time_temp:
-                    mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'], db_conn)
+                    mysql_reservation.reservation_save(data['HospitalID'],data['Customer_name'],data["Customer_number"],data['AnimalType'],data['Symptom'],data['Time'],data['AdditionalInfo'], db_conn)
                     db_conn.close()
                     return Response("", status=200)      
                 else:
