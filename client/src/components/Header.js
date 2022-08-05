@@ -10,13 +10,19 @@ class Header extends React.Component {
   render() {
     return (
         <header id="header">
-            <nav>
-              <ul>
-                <li><a href="/"><img src='/Images/1-logo.png' className="logo"/></a></li>
-                <li>reservation</li>
-                <li>about us</li>
-              </ul>
-            </nav>
+          <div id="header-logo">
+            <img src="/Images/1-logo.png" className="logo"/>
+          </div>
+          <nav>
+            <ul>
+              <li>반려동물 분양</li>
+              <li>병원 이용 후기</li>
+              <li>고객센터</li>
+              <li>HISTORY</li>
+              <li>RESERVATION</li>
+              <li>ABOUT US</li>
+            </ul>
+          </nav>
         </header>
     );
   }

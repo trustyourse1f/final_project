@@ -1,27 +1,33 @@
 #header {
-    min-height: 120px;
+    min-height: 145px;
     overflow: auto;
 }
 
+#header-logo {
+    margin: 10px 0;
+    height: 75px;
+    text-align: center;
+}
+
+#header-logo > .logo {
+    height: inherit;
+}
+
 #header nav {
-    margin: 20px 0;
-    font-family: 'NanumDongHwaDdoBag';
+    padding-left: 45%;
+    padding-right: 15px;
+    background-color: #3b976d;
 }
 
 #header nav > ul {
     display: flex;
     list-style-type: none;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     margin: 0;
     padding: 0;
-    background-color: #3b976d;
     color: white;
     align-items: center;
-    height: 75px;
-    font-size: 20px;
-}
-
-#header .logo {
-    width: 75px;
+    height: 40px;
+    font-size: 15px;
 }

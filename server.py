@@ -53,7 +53,7 @@ def searchsymptom_list():
         question = request.args.get('q')      
         symptom_list = Symptom_prediction_system.search_symptom(question,Symptom_prediction_system.db_connect(pw))
         if len(symptom_list) == 0:
-            return Response("",status=400)
+            return jsonify([])
         else:
             return jsonify(symptom_list)
     except:

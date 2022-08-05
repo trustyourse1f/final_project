@@ -6,3 +6,7 @@ article.info {
     border: 2px solid lightgray;
     box-shadow: 0 0 10px lightgray;
 }
+
+#info0 {
+    height: inherit;
+}

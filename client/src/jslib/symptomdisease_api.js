@@ -7,7 +7,6 @@ function get_symptomCategory() {
         url: '/symptomcategory',
     })
     .then(res => {
-        console.log(res.data);
         return res;
     })
     .catch(err => {
@@ -15,13 +14,12 @@ function get_symptomCategory() {
     })
 }
 
-function get_symptoms(category) {
+function get_symptoms() {
     return axios({
         method: 'GET',
-        url: `/symptom?category=${encodeURIComponent(category)}`
+        url: `/symptom`
     })
     .then(res => {
-        console.log(res.data);
         return res;
     })
     .catch(err => {
@@ -35,7 +33,19 @@ function get_species() {
         url: '/select-species'
     })
     .then(res => {
-        console.log(res.data);
+        return res;
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
+
+function search_symptoms(q) {
+    return axios({
+        method: 'GET',
+        url: `/searchsymptom?q=${encodeURIComponent(q)}`
+    })
+    .then(res => {
         return res;
     })
     .catch(err => {
@@ -61,4 +71,4 @@ function post_predictDisease(symptom_lst, species_data) {
     })
 }
 
-export { get_symptomCategory, get_symptoms, get_species, post_predictDisease };
+export { get_symptomCategory, get_symptoms, get_species, post_predictDisease, search_symptoms };
