@@ -38,6 +38,16 @@
     align-items: center;
 }
 
+.time-selection button {
+    border: none;
+    box-shadow: 2px 2px 4px gray;
+}
+
+.validbtn {
+    background-color: #e5f4fb;
+    color: black;
+}
+
 .invalidbtn {
     background-color: #7f7f7f;
     color: white;
@@ -74,12 +84,6 @@
 .time-selection > div {
     text-align: center;
     padding: 10px;
-}
-
-.time-selection button {
-    background-color: #e5f4fb;
-    border: none;
-    box-shadow: 2px 2px 4px gray;
 }
 
 .time-selection-desc {

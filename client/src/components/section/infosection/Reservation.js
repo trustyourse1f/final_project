@@ -25,7 +25,8 @@ function Reservation(props) {
         Customer_number:'010-0000-0000',
         AnimalType: st_and_at.AnimalType,
         Symptom: st_and_at.Symptom,
-        Time: 0
+        Time: 0,
+        AdditionalInfo: ''
     });
     const [reservationTable, setReservationTable] = useState([]);
     const [timeSelectionBtns, setTimeSelectionBtns] = useState([]);
@@ -155,6 +156,8 @@ function Reservation(props) {
                         placeholder="동물종류" value={postData.AnimalType}/>
                         <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
                         placeholder="증상" value={postData.Symptom}/>
+                        <textarea onChange={(e) => {postData.AdditionalInfo = e.target.value; setPostData({...postData});}}
+                        placeholder="추가 전달 사항" value={postData.AdditionalInfo}/>
                         <button onClick={() => {post_reservation(postData).then(res => {
                             get_reservationtable(props.HospitalID, setReservationTable);
                         }).catch(err => {
