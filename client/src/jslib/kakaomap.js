@@ -44,21 +44,28 @@ class KakaoMap {
         });
     }
 
-    setInfoWindow(marker, iwContent = '<div></div>', h_id=0, reserve_cbk) {
+    setInfoWindow_CO(marker, iwContent = '<div></div>', h_id=0, reserve_cbk) {
         // 마커에 커서가 오버됐을 때 마커 위에 표시할 인포윈도우를 생성합니다
         // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
 
         // 인포윈도우를 생성합니다
-        var infowindow = new kakao.maps.InfoWindow({
+        var infowindow = new kakao.maps.CustomOverlay({
+            clickable: true,
             content : iwContent,
-            removable : true
+            position : marker.getPosition(),
+            yAnchor: 1.125,
+            zIndex: 1000
         });
 
         // 마커에 마우스오버 이벤트를 등록합니다
         kakao.maps.event.addListener(marker, 'click', () => {
-        // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
-            infowindow.open(this.map, marker);
-            let emt = document.querySelector(`#h${h_id} button`);
+            // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+            infowindow.setMap(this.map);
+            let clsbtn = document.querySelector(`#h${h_id} .close`);
+            clsbtn.addEventListener("click", () => {
+                infowindow.setMap(null)
+            });
+            let emt = document.querySelector(`#h${h_id} .go-reserve`);
             emt.addEventListener("click", reserve_cbk);
         });
     }

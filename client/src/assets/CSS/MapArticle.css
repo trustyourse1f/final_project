@@ -25,20 +25,72 @@
 }
 
 .infowin {
-    min-width: 150px;
-    background-color: black;
-    color: white;
+    width: 320px;
+    height: 160px;
+    background-color: white;
+    box-shadow: 3px 3px 5px gray;
 }
 
-.infowin h1 {
+.infowin > header {
+    background-color: #3b976d;
+    display: flex;
+    width: inherit;
+    height: 36px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.infowin > header > img {
+    width: 24px;
+}
+
+.infowin > header h1 {
+    flex: 1 1 auto;
     margin: 0;
     padding: 0;
     font-size: 15px;
 }
 
+.infowin > header .close {
+    flex: 0 1 24px;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    color: white;
+    border: none;
+    font-weight: 800;
+}
+
 .infowindesc {
+    width: inherit;
+    height: 124px;
     margin: 0;
     font-size: 8px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 3fr 3fr 2fr;
+    gap: 7px;
+    grid-gap: 7px;
+}
+
+.infowindesc * {
+    word-break: break-all;
+}
+
+.infowindesc *:nth-child(2) {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column: 2;
+}
+
+.infowindesc *:nth-child(4) {
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.infowindesc *:nth-child(5) {
+    grid-row: 3;
+    grid-column: 2;
 }
 
 .icon-container > img {
@@ -47,15 +99,26 @@
 
 .gumarker {
     background-color: white;
-    border-radius: 30px;
+    border-radius: 40px;
     font-size: 12px;
     text-align: center;
-    width: 60px;
-    height: 60px;
-    justify-content: space-evenly;
+    width: 70px;
+    height: 70px;
+    justify-content: center;
     display: flex;
     flex-direction: column;
-    border-width: 3px;
-    border-style: solid;
-    border-color: #ffadd2;
+    border: 6px solid #3b976d;
+}
+
+.gumarker *:nth-child(1) {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.gumarker *:nth-child(2) {
+    color: #00a0e9;
+}
+
+.gumarker *:nth-child(3) {
+    color: #ff3333;
 }

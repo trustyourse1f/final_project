@@ -48,12 +48,20 @@ function MapArticle(props) {
                     additional_info.push('<img src="/Images/1-parking.png"/>');
                 }
                 let infowindow = `<div class="infowin" id="h${i}">
-                                    <h1>${res.data[i].name}</h1>
-                                    <div class="infowindesc">${res.data[i].contract}<br/>
-                                    ${res.data[i].address}</div>
-                                    <div class="icon-container">${additional_info.join('')}</div>
-                                    <button>예약하기</button></div>`;
-                tmp_map.setInfoWindow(mk, infowindow, i, () => {
+                                    <header>
+                                        <img src="/Images/hospital_icon.png"/>
+                                        <h1>${res.data[i].name}</h1>
+                                        <button class="close">X</button>
+                                    </header>
+                                    <div class="infowindesc">
+                                        <div>${res.data[i].address}</div>
+                                        <div>${res.data[i].businessHours}</div>
+                                        <div>${res.data[i].contract}</div>
+                                        <div class="icon-container">${additional_info.join('')}</div>
+                                        <div><button class="go-reserve">예약하기</button></div>
+                                    </div>
+                                </div>`;
+                tmp_map.setInfoWindow_CO(mk, infowindow, i, () => {
                     dispatch(setInfo(res.data[i]));
                 });
             }
@@ -68,7 +76,7 @@ function MapArticle(props) {
                 for(let i=0; i<res.data.length; i++) {
                     gumarker_content = `<div class="gumarker">
                                         <div>${res.data[i].name}</div>
-                                        <div>총: ${res.data[i].total}</div>
+                                        <div>병원: ${res.data[i].total}</div>
                                         <div>24시: ${res.data[i].Is24}</div></div>`;
                     gumarker_lst.push(tmp_map.add_customOverlay(res.data[i].latitude, res.data[i].longitude, gumarker_content));
                 }
