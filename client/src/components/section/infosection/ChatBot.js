@@ -69,8 +69,10 @@ function ChatBot(props) {
         let target = document.getElementsByClassName('symptom-autocomplete')[0];
         if (autoComplete.length === 0) {
             target.style.height = '0';
+            document.getElementsByClassName('chatwrapper')[0].style.height = 'inherit';
         } else {
-            target.style.height = '250px';
+            target.style.height = '180px';
+            document.getElementsByClassName('chatwrapper')[0].style.height = '475px';
         }
     }, [autoComplete])
 
