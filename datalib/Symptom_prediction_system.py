@@ -1,5 +1,6 @@
 import pandas as pd
 import pymysql
+import random
 def db_connect(pw):
     db = pymysql.connect(host='localhost', port=3306, user='root', passwd=f'{pw}', db='petmily_db', charset='utf8')
     query = "SELECT * FROM symptom"
@@ -14,7 +15,6 @@ def db_connect(pw):
                 "info":row[4],
                  }        
         result.append(j_dict)   
-
     return result 
 # 전처리함수화
 def disease_pretreatment(db):
@@ -207,12 +207,18 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
         result = dict(sorted(index_number_dict.items(), key=lambda x: x[1], reverse=True)) 
         result_list=[]
         num=0
-        for i,j in result.items():
-            num+=1
-            if j != 0:
+        result_samelist = [k for k,v in result.items() if max(result.values()) == v]
+        if len(result_samelist) >5:
+            random.shuffle(result_samelist)
+            for i in result_samelist[:5]:
                 result_list.append(i)
-            if num == 5:
-                break
+        else:
+            for i,j in result.items():
+                num+=1
+                if j != 0:
+                    result_list.append(i)
+                if num == 5:
+                    break
         return result_list
         
     elif select_species == '고양이':
@@ -227,12 +233,18 @@ def disease_prediction(admin_select_list,select_species,disease_pretreatment):
         result = dict(sorted(index_number_dict.items(), key=lambda x: x[1], reverse=True))
         result_list=[]
         num=0
-        for i,j in result.items():
-            num+=1
-            if j != 0:
+        result_samelist = [k for k,v in result.items() if max(result.values()) == v]
+        if len(result_samelist) >5:
+            random.shuffle(result_samelist)
+            for i in result_samelist[:5]:
                 result_list.append(i)
-            if num == 5:
-                break
+        else:
+            for i,j in result.items():
+                num+=1
+                if j != 0:
+                    result_list.append(i)
+                if num == 5:
+                    break
         return result_list
 
 def predict_disease_Definition(diseaselist,disease_pretreatment):
