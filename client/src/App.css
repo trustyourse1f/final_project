@@ -4,6 +4,23 @@
   overflow: hidden;
 }
 
+/* 아래의 모든 코드는 영역::코드로 사용 */
+
+#App *::-webkit-scrollbar {
+    width: 15px;  /* 스크롤바의 너비 */
+}
+
+#App *::-webkit-scrollbar-thumb {
+    height: auto; /* 스크롤바의 길이 */
+    background: #3b976d; /* 스크롤바의 색상 */
+    
+    border-radius: 10px;
+}
+
+#App *::-webkit-scrollbar-track {
+    background: rgba(59, 151, 109, 0.1);  /*스크롤바 뒷 배경 색상*/
+}
+
 a {
   color: inherit;
 }

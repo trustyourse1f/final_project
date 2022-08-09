@@ -81,6 +81,10 @@ function ChatBot(props) {
         postData.symptoms = new Set();
         postData.symptomInfo = new Set();
         chatlog.splice(0, chatlog.length);
+        let a = document.querySelector('.system-btn-table > input')
+        a.value = '';
+        a.disabled = true;
+        setAutoComplete([]);
         setChatPhase(0);
     }
 
@@ -178,7 +182,8 @@ function ChatBot(props) {
             setChatPhase(3);
         })
     } else if(chatPhase==8) {
-        chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.</div>);
+        chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.<br/>
+                                                {'(순서는 우선순위와 관계없습니다.)'}</div>);
         chatlog.push(<div className='botmessage'>해당결과는 공공데이터포털-동물질병데이터를 기반으로 제공되는 단순참고 정보입니다.
                                                 정확한 진단은 동물병원 방문 및 수의사 진료 후 확인해주세요</div>);
         dispatch(setSymptomsAnimaltype({
@@ -187,14 +192,14 @@ function ChatBot(props) {
         
         post_predictDisease(Array.from(postData.symptoms), postData.species).then(res => {
             chatlog.push(<div className='botmessage'>
-                <ol>
+                <ul>
                     {res.data.map((item, index) => {
                         return(<li key={`${index}`}>{item}</li>)
                     })}
-                </ol>
+                </ul>
             </div>);
             chatlog.push(<div className='botmessage'>증상이 저장되었습니다.<br/>
-                저장된 증상정보는 예약시 활용이 가능합니다</div>);
+                저장된 증상정보는 예약 시 활용이 가능합니다</div>);
             setChatPhase(9);
             setAutoComplete([]);
         })
