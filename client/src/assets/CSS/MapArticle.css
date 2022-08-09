@@ -43,8 +43,8 @@
 }
 
 .infowin {
-    width: 340px;
-    height: 180px;
+    height: fit-content;
+    min-width: 250px;
     background-color: white;
     box-shadow: 3px 3px 5px gray;
 }
@@ -53,7 +53,7 @@
     background-color: #3b976d;
     display: grid;
     grid-template-columns: 32px auto 32px;
-    width: inherit;
+    width: 100%;
     height: 36px;
     flex-direction: row;
     align-items: center;
@@ -82,42 +82,34 @@
 }
 
 .infowindesc {
-    max-width: 340px;
-    width: inherit;
-    min-height: 144px;
+    width: 100%;
+    min-height: 96px;
+    padding: 0 3px;
     margin: 0;
     font-size: 8px;
-    display: block;
-    grid-template-columns: 166px 166px;
-    grid-template-rows: 3fr 3fr 2fr;
-    gap: 8px;
-    grid-gap: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     overflow: hidden;
     overflow-wrap: break-word;
 }
 
 .infowindesc > * {
     width: 100%;
-    height: fit-content;
+    margin: 5px 0;
     word-break: break-all;
     font-size: 12px;
 }
 
-.infowindesc > *:nth-child(2) {
-    grid-row-start: 1;
-    grid-row-end: 3;
-    grid-column: 2;
-}
-
-.infowindesc > *:nth-child(4) {
-    grid-row: 3;
-    grid-column: 1;
-}
-
 .infowindesc > *:nth-child(5) {
-    grid-row: 3;
-    grid-column: 2;
     text-align: center;
+}
+
+.infowindesc > *:nth-child(5) button{
+    border: none;
+    border-radius: 10px;
+    background-color: #00a0e9;
+    color: white;
 }
 
 .icon-container {
