@@ -38,6 +38,7 @@ function get_reservationtable(hid, set_cbk) {
     })
     .then(res => {
         set_cbk(res.data);
+        return res;
     })
     .catch(err => {
         console.error(err);

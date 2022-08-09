@@ -22,7 +22,7 @@ function Reservation(props) {
     const [postData, setPostData] = useState({
         HospitalID: props.HospitalID,
         Customer_name:'',
-        Customer_number:'010-0000-0000',
+        Customer_number:'',
         AnimalType: st_and_at.AnimalType,
         Symptom: st_and_at.Symptom,
         Time: 0,
@@ -92,7 +92,7 @@ function Reservation(props) {
             selectedDate.setHours(hour);
             selectedDate.setMinutes(minute);
             const tstmp = selectedDate.getTime();
-            if(reservationTable.includes(tstmp)) {
+            if(reservationTable.includes(tstmp) || tstmp <= new Date().getTime()) {
                 timeSelectionBtns.push(<div><button className="invalidbtn">{`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button></div>);
             } else {
                 const clickbtn = (e) => {
@@ -151,34 +151,42 @@ function Reservation(props) {
                         <div className='userinfo-input'>
                             <label for="userinput0">아이 이름</label>
                             <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
-                            placeholder="이름" value={postData.Customer_name} id="userinput0"/>
+                            placeholder="춘식이" value={postData.Customer_name} id="userinput0"/>
                         </div>
                         <div className='userinfo-input'>
                             <label for="userinput1">전화번호</label>
                             <input type='text' onChange={(e) => {postData.Customer_number = e.target.value; setPostData({...postData});}}
-                            placeholder="전화번호" value={postData.Customer_number} id="userinput1"/>
+                            placeholder="전화 (010-0000-0000)" value={postData.Customer_number} id="userinput1"/>
                         </div>
                         <div className='userinfo-input'>
-                            <label for="userinput2">{'종 (예: 강아지)'}</label>
+                            <label for="userinput2">{'종 '}</label>
                             <input type='text' onChange={(e) => {postData.AnimalType = e.target.value; setPostData({...postData});}}
-                            placeholder="종" value={postData.AnimalType} id="userinput2"/>
+                            placeholder="종 (강아지)" value={postData.AnimalType} id="userinput2"/>
                         </div>
                         <div className='userinfo-input'>
                             <label for="userinput3">주요 증상</label>
                             <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
-                            placeholder="증상" value={postData.Symptom} id="userinput3"/>
+                            placeholder="혈변, 앞다리 떨림, ..." value={postData.Symptom} id="userinput3"/>
                         </div>
                         <div className='userinfo-input'>
                             <label for="userinput4">추가 전달 사항</label>
                             <textarea onChange={(e) => {postData.AdditionalInfo = e.target.value; setPostData({...postData});}}
-                            placeholder="추가 전달 사항" value={postData.AdditionalInfo} id="userinput4"/>
+                            placeholder="포메리안, 암컷, 2세, 어제부터 아팠어요, ..." value={postData.AdditionalInfo} id="userinput4"/>
                         </div>
                     </div>
-                    <button onClick={() => {post_reservation(postData).then(res => {
-                        get_reservationtable(props.HospitalID, setReservationTable);
-                    }).catch(err => {
-                        window.alert("예약을 실패했습니다!");
-                    });}} className="reserve-button">예약하기</button>
+                    <button onClick={(e) => {
+                        if(postData.Customer_number.length < 7) {
+                            window.alert("전화번호를 입력해주세요")
+                        } else {
+                            post_reservation(postData).then(res => {
+                                get_reservationtable(props.HospitalID, setReservationTable).then(res => {
+                                    window.alert("예약을 성공했습니다!");
+                            });
+                            }).catch(err => {
+                                window.alert("예약을 실패했습니다! (시간을 선택했는지 확인해주세요)");
+                            });
+                        }
+                    }} className="reserve-button">예약하기</button>
                 </div>
             </div>
         </div>
