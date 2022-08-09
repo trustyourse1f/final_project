@@ -7,12 +7,12 @@ function getGeoPosition(setpos = (lat, lng) => {console.log(lat,lng);}) {
 }
 
 function findNearestHospital(lat, lng) {
-    axios({
+    return axios({
         method: 'GET',
         url: `/distance?latitude=${lat}&longitude=${lng}`
     })
     .then(res => {
-        console.log(res.data);
+        return res;
     });
 }
 

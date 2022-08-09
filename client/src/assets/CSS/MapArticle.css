@@ -37,6 +37,11 @@
     z-index: 10;
 }
 
+#emmergencebtn > img {
+    width: 64px;
+    cursor: pointer;
+}
+
 .infowin {
     width: 340px;
     height: 180px;

@@ -113,14 +113,16 @@ function MapArticle(props) {
     }, []);
 
     function nearestHospital() {
-        getGeoPosition((lat, lng) => {findNearestHospital(lat, lng);})
+        getGeoPosition((lat, lng) => {findNearestHospital(lat, lng).then(res => {
+            kmap.setCenter(res.data.latitude, res.data.longitude);
+        })})
     }
         
     return (
         <div id="mapwrap">
             <div id="map"></div>
             <div id="emmergencebtn">
-                <button onClick={nearestHospital}>응급</button>
+                <img src="/Images/red_siren.png" onClick={nearestHospital}/>
             </div>
         </div>
     );

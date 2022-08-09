@@ -34,6 +34,14 @@ class KakaoMap {
         });
     }
 
+    setCenter(lat, lng) {
+        // 이동할 위도 경도 위치를 생성합니다 
+        var moveLatLon = new kakao.maps.LatLng(lat, lng);
+        
+        // 지도 중심을 이동 시킵니다
+        this.map.setCenter(moveLatLon);
+    }
+
     transcoord_TM(x, y, callback) {
         var geocoder = new kakao.maps.services.Geocoder(); // 좌표계 변환 객체를 생성합니다
 
