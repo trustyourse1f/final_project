@@ -6,6 +6,7 @@ from datalib import db_hospital_time
 from datalib import distance
 import pymysql
 import urllib
+import random
 #db연동
 ht='localhost'
 pt=3306
@@ -88,7 +89,8 @@ def predict_disease():
         symptom_data = request.get_json()
         if len(symptom_data) == 0:
             return Response("", status=400)
-        else:    
+        else:
+            random.seed(42)    
             result_predict_disease = Symptom_prediction_system.disease_prediction(Symptom_prediction_system.admin_list(symptom_data['symptoms'],Symptom_prediction_system.db_connect(pw)),symptom_data['species'],Symptom_prediction_system.disease_pretreatment(db_conn))
             return jsonify(result_predict_disease)
     except Exception as e:
