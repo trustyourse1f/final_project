@@ -10,9 +10,9 @@ class Header extends React.Component {
   render() {
     return (
         <header id="header">
-          <div id="header-logo">
+          <div id="header-logo"><a href='/'>
             <img src="/Images/1-logo.png" className="logo"/>
-          </div>
+          </a></div>
           <nav>
             <ul>
               <li>반려동물 분양</li>

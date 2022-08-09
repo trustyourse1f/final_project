@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapArticle, InfoArticle } from './section';
+import { MapArticle, InfoArticle, LegendArticle } from './section';
 import 'assets/CSS/MainSection.css';
 
 class MainSection extends React.Component {
@@ -8,6 +8,7 @@ class MainSection extends React.Component {
         <section id="section">
             <InfoArticle/>
             <MapArticle/>
+            <LegendArticle/>
         </section>
         );
     }

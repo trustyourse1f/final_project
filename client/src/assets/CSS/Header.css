@@ -9,8 +9,8 @@
     text-align: center;
 }
 
-#header-logo > .logo {
-    height: inherit;
+#header-logo .logo {
+    height: 75px;
 }
 
 #header nav {
