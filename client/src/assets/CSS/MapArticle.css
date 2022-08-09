@@ -1,27 +1,40 @@
-#map {
+#mapwrap {
+    position: relative;
     border: 2px solid lightgray;
     box-shadow: 0 0 10px lightgray;
 }
 
 @media screen and (max-width: 480px) {
-    #map {
+    #mapwrap {
         width: 100%;
         min-height: 70vh;
     }
 }
 
 @media screen and (min-width: 480px) and (max-width: 1200px) {
-    #map {
+    #mapwrap {
         width: 480px;
         min-height: 70vh;
     }
 }
 
 @media screen and (min-width: 1200px){
-    #map {
+    #mapwrap {
         width: 750px;
         height: 600px;
     }
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+#emmergencebtn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 10;
 }
 
 .infowin {
@@ -64,12 +77,13 @@
 }
 
 .infowindesc {
+    max-width: 340px;
     width: inherit;
-    height: 144px;
+    min-height: 144px;
     margin: 0;
     font-size: 8px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: block;
+    grid-template-columns: 166px 166px;
     grid-template-rows: 3fr 3fr 2fr;
     gap: 8px;
     grid-gap: 8px;
@@ -78,9 +92,8 @@
 }
 
 .infowindesc > * {
-    max-width: inherit;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
+    width: 100%;
+    height: fit-content;
     word-break: break-all;
     font-size: 12px;
 }

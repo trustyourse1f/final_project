@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'assets/CSS/MapArticle.css';
 import KakaoMap from 'jslib/kakaomap';
+import { getGeoPosition, findNearestHospital } from 'jslib/geoApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { setHospitals } from 'reduxapp/feature/hospitals';
 import { setInfo } from 'reduxapp/feature/selected_info';
@@ -21,6 +22,7 @@ function MapArticle(props) {
             dispatch(setHospitals(res.data));
             let tmp_map = new KakaoMap('map');
             let mk_lst = [];
+
             for(let i=0; i<res.data.length; i++)
             {
                 let mkimg = null;
@@ -56,7 +58,7 @@ function MapArticle(props) {
                                     <div class="infowindesc">
                                         <div>${res.data[i].address}</div>
                                         <div>${res.data[i].businessHours}</div>
-                                        <div>${res.data[i].contract}</div>
+                                        <div>Tel. ${res.data[i].contract}</div>
                                         <div class="icon-container">${additional_info.join('')}</div>
                                         <div><button class="go-reserve">예약하기</button></div>
                                     </div>
@@ -65,7 +67,6 @@ function MapArticle(props) {
                     dispatch(setInfo(res.data[i]));
                 });
             }
-
             axios({
                 method: 'GET',
                 url: '/guinfo'
@@ -104,15 +105,24 @@ function MapArticle(props) {
             })
             .catch(err => {
                 console.error(err);
-            })
+            });
         })
         .catch(err => {
             console.error(err);
         })
     }, []);
+
+    function nearestHospital() {
+        getGeoPosition((lat, lng) => {findNearestHospital(lat, lng);})
+    }
         
     return (
-        <div id="map"></div>
+        <div id="mapwrap">
+            <div id="map"></div>
+            <div id="emmergencebtn">
+                <button onClick={nearestHospital}>응급</button>
+            </div>
+        </div>
     );
 }
 
