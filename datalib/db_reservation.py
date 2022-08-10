@@ -25,7 +25,8 @@ def host_reservation(db,hospiID):
             "Customer_number":row[3],
             "AnimalType":row[4],
             "Symptom":row[5],
-            "Time":row[6]
+            "Time":row[6],
+            "AdditionalInfo":row[7]
                 }
         result.append(j_dict)
     for i in c2:
