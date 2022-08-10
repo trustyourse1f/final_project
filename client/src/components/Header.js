@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'assets/CSS/Header.css';
 
 class Header extends React.Component {
@@ -10,9 +11,9 @@ class Header extends React.Component {
   render() {
     return (
         <header id="header">
-          <div id="header-logo"><a href='/'>
+          <div id="header-logo"><Link to='/'>
             <img src="/Images/1-logo.png" className="logo"/>
-          </a></div>
+          </Link></div>
           <nav>
             <ul>
               <li>반려동물 분양</li>
@@ -20,7 +21,7 @@ class Header extends React.Component {
               <li>고객센터</li>
               <li>HISTORY</li>
               <li>RESERVATION</li>
-              <li>ABOUT US</li>
+              <Link to="/aboutus"><li>ABOUT US</li></Link>
             </ul>
           </nav>
         </header>

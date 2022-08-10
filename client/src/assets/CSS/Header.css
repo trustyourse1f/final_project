@@ -3,6 +3,10 @@
     overflow: auto;
 }
 
+#header a {
+    text-decoration: none;
+}
+
 #header-logo {
     margin: 10px 0;
     height: 75px;

@@ -1,0 +1,98 @@
+#section-au {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.aboutus-article {
+    width: 1250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.about_company {
+    width: 100%;
+    margin-bottom: 40px;
+    padding: 5px;
+    display:grid;
+    grid-template-columns: 2fr 3fr;
+    grid-gap: 5px;
+    gap: 5px;
+}
+
+.about_company > img {
+    width: 100%;
+}
+
+.about_company > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    text-align: left;
+    color: #333333;
+    font-size: 27px;
+    font-weight: 600;
+}
+
+.about_crew {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.crew {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+}
+
+.crew > div {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.crew:nth-child(1) > div:hover {
+    background-color: aqua;
+    transition: background-color 700ms linear;
+}
+
+.crew:nth-child(2) > div:hover {
+    background-color: coral;
+    transition: background-color 700ms linear;
+}
+
+.crew:nth-child(3) > div:hover {
+    background-color: #ff51df;
+    transition: background-color 700ms linear;
+}
+
+.crew:nth-child(4) > div:hover {
+    background-color: #65ffa0;
+    transition: background-color 700ms linear;
+}
+
+.crew:nth-child(5) > div:hover {
+    background-color: black;
+    color: white;
+    transition-property: background-color, color;
+    transition-duration: 700ms, 700ms;
+    transition-timing-function: linear, linear;
+}
+
+.crew:nth-child(6) > div:hover {
+    background-color: #ffff5f;
+    transition: background-color 700ms linear;
+}
+
+.crew > img {
+    width: 100%;
+}

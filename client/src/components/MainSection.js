@@ -1,15 +1,21 @@
 import React from 'react';
-import { MapArticle, InfoArticle, LegendArticle } from './section';
+import { Route, Routes } from 'react-router-dom';
+import { MapArticle, InfoArticle, LegendArticle, AboutUs } from './section';
 import 'assets/CSS/MainSection.css';
 
 class MainSection extends React.Component {
     render() {
         return (
-        <section id="section">
-            <InfoArticle/>
-            <MapArticle/>
-            <LegendArticle/>
-        </section>
+            <>
+            <Routes>
+                <Route path="/aboutus/" element={<AboutUs/>}></Route>
+                <Route path="/" element={<section id="section">
+                        <InfoArticle/>
+                        <MapArticle/>
+                        <LegendArticle/>
+                    </section>}></Route>
+            </Routes>
+            </>
         );
     }
 }

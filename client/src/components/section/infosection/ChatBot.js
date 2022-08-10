@@ -111,7 +111,8 @@ function ChatBot(props) {
         })
     } else if(chatPhase==2) {
         document.querySelector('.system-btn-table :nth-child(2)').disabled = false;
-        chatlog.push(<div className='botmessage'>증상을 선택해주세요</div>);
+        chatlog.push(<div className='botmessage'>증상을 선택해주세요
+                        {'(선택한 증상이 많을수록 더 정확한 진단이 가능합니다.)'}</div>);
         get_symptoms().then(res => {
             chatlog.push(<div className="botmessage choice-container">
                 {res.data.map((item, index) => {
@@ -182,10 +183,11 @@ function ChatBot(props) {
             setChatPhase(3);
         })
     } else if(chatPhase==8) {
-        chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.<br/>
-                                                {'(순서는 우선순위와 관계없습니다.)'}</div>);
         chatlog.push(<div className='botmessage'>해당결과는 공공데이터포털-동물질병데이터를 기반으로 제공되는 단순참고 정보입니다.
                                                 정확한 진단은 동물병원 방문 및 수의사 진료 후 확인해주세요</div>);
+        chatlog.push(<div className='botmessage'>예측되는 질병은 다음과 같습니다.<br/>
+                    {'(순서는 우선순위와 관계없습니다.)'}</div>);
+        
         dispatch(setSymptomsAnimaltype({
             Symptom: Array.from(postData.symptomInfo).join(', '),
             AnimalType: postData.species}));
@@ -220,7 +222,7 @@ function ChatBot(props) {
                 {autoComplete}
             </div>
             <div className='system-btn-table'>
-                <button onClick={resetChat}>초기화</button>
+                <button onClick={resetChat}>처음으로</button>
                 <input type='text' placeholder='증상 검색' onChange={(e) => {setSearchStr(e.target.value)}} disabled/>
             </div>
         </div>
