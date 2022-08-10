@@ -144,11 +144,13 @@ function Reservation(props) {
                         <div style={{backgroundColor: '#e5f4fb',
                     display: 'inline-block',
                     width: '12px',
-                    height: '12px'}}/> 예약가능 &nbsp; &nbsp;
+                    height: '12px',
+                    border: '1px solid black'}}/> 예약가능 &nbsp; &nbsp;
                         <div style={{backgroundColor: '#7f7f7f',
                     display: 'inline-block',
                     width: '12px',
-                    height: '12px'}}/> 예약불가
+                    height: '12px',
+                    border: '1px solid black'}}/> 예약불가
                     </div>
                     <div className="userinfo-input-container">
                         <div className='userinfo-input'>

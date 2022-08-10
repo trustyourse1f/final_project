@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import moment from 'moment';
 import { get_reservationtableHost } from 'jslib/reservation_api';
 import 'assets/CSS/ReservationHost.css';
@@ -8,6 +8,19 @@ function ReservationHost(props) {
                                                     name: '',
                                                     reservations: []
     });
+
+    useEffect(() => {
+        if (tabledata.length > 0) {
+            tabledata.reservations.sort((a, b) => {
+                if(a.Time < b.Time) {
+                    return -1
+                } else if(a.Time > b.Time) {
+                    return 1
+                }
+                return 0
+            });
+        }
+    }, [tabledata]);
 
     function searchhid(e) {
         if(e.key === "Enter") {
@@ -34,14 +47,16 @@ function ReservationHost(props) {
                             <th>전화번호</th>
                             <th>종</th>
                             <th>증상</th>
+                            <th>추가사항</th>
                         </tr>
                         {tabledata.reservations.map((val, ind) => {
                             return (<tr key={`${ind}`}>
-                                <td>{moment(new Date(val.Time)).format('YYYY.MM.DD')}</td>
+                                <td>{moment(new Date(val.Time)).format('YYYY.MM.DD h:mm')}</td>
                                 <td>{val.Customer_name}</td>
                                 <td>{val.Customer_number}</td>
                                 <td>{val.AnimalType}</td>
                                 <td>{val.Symptom}</td>
+                                <td>{val.AdditionalInfo}</td>
                             </tr>);
                         })}
                     </table>
