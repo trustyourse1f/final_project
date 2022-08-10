@@ -45,4 +45,18 @@ function get_reservationtable(hid, set_cbk) {
     })
 }
 
-export { post_reservation, get_buisnesshour, get_reservationtable };
+function get_reservationtableHost(hid, set_cbk) {
+    return axios({
+        method: 'GET',
+        url: '/reserveinfo/host?hospitalid=' + String(hid)
+    })
+    .then(res => {
+        set_cbk(res.data);
+        return res;
+    })
+    .catch(err => {
+        console.error(err);
+    })
+}
+
+export { post_reservation, get_buisnesshour, get_reservationtable, get_reservationtableHost };

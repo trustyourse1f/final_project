@@ -1,0 +1,21 @@
+#section-re {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#reservationtable-article {
+    width: 1250px;
+}
+
+#reserve-table > table {
+    width: 100%;
+    border: 1px solid black;
+}
+
+#reserve-table > table tr,
+#reserve-table > table td,
+#reserve-table > table th {
+    border: 1px solid black;
+}

@@ -20,7 +20,7 @@ class Header extends React.Component {
               <li>병원 이용 후기</li>
               <li>고객센터</li>
               <li>HISTORY</li>
-              <li>RESERVATION</li>
+              <Link to="/reservationhost"><li>RESERVATION</li></Link>
               <Link to="/aboutus"><li>ABOUT US</li></Link>
             </ul>
           </nav>
