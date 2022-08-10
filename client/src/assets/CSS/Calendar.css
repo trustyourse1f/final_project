@@ -68,11 +68,11 @@
 .react-calendar__month-view__days__day--weekend {
   color: #d10000;
 }
+.react-calendar__month-view__days__day:nth-child(7n + 6):not(.react-calendar__month-view__days__day--neighboringMonth){
+  color: #1087ff; 
+}
 .react-calendar__month-view__days__day--neighboringMonth {
   color: #757575;
-}
-.react-calendar__month-view__days *:nth-child(7n + 6) {
-  color: #1087ff; 
 }
 .react-calendar__year-view .react-calendar__tile,
 .react-calendar__decade-view .react-calendar__tile,

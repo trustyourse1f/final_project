@@ -154,7 +154,7 @@ function Reservation(props) {
                         <div className='userinfo-input'>
                             <label for="userinput0">아이 이름</label>
                             <input type='text' onChange={(e) => {postData.Customer_name = e.target.value; setPostData({...postData});}}
-                            placeholder="춘식이" value={postData.Customer_name} id="userinput0"/>
+                            placeholder="예: 춘식이" value={postData.Customer_name} id="userinput0"/>
                         </div>
                         <div className='userinfo-input'>
                             <label for="userinput1">전화번호</label>
@@ -169,12 +169,12 @@ function Reservation(props) {
                         <div className='userinfo-input'>
                             <label for="userinput3">주요 증상</label>
                             <textarea onChange={(e) => {postData.Symptom = e.target.value; setPostData({...postData});}}
-                            placeholder="혈변, 앞다리 떨림, ..." value={postData.Symptom} id="userinput3"/>
+                            placeholder="예: 혈변, 앞다리 떨림, ..." value={postData.Symptom} id="userinput3"/>
                         </div>
                         <div className='userinfo-input'>
                             <label for="userinput4">추가 전달 사항</label>
                             <textarea onChange={(e) => {postData.AdditionalInfo = e.target.value; setPostData({...postData});}}
-                            placeholder="포메리안, 암컷, 2세, 어제부터 아팠어요, ..." value={postData.AdditionalInfo} id="userinput4"/>
+                            placeholder="예: 포메라니안, 암컷, 2세, 어제부터 아팠어요, ..." value={postData.AdditionalInfo} id="userinput4"/>
                         </div>
                     </div>
                     <button onClick={(e) => {

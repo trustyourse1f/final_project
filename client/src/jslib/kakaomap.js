@@ -2,7 +2,7 @@
 const { kakao } = window;
 
 class KakaoMap {
-    constructor(container_id, lat = 37.5675, lng = 126.98, lvl = 6) {
+    constructor(container_id, lat = 37.5275, lng = 126.975, lvl = 8) {
         const container = document.getElementById(container_id);
         const options = {
             center: new kakao.maps.LatLng(lat, lng),
@@ -23,6 +23,10 @@ class KakaoMap {
         }
     }
 
+    create_LatLng(lat, lng) {
+        return new kakao.maps.LatLng(lat, lng);
+    }
+
     add_marker(lat, lng, clickable = false, image = null) {
         var markerPosition  = new kakao.maps.LatLng(lat, lng); 
 
@@ -40,6 +44,7 @@ class KakaoMap {
         
         // 지도 중심을 이동 시킵니다
         this.map.setCenter(moveLatLon);
+        this.map.setLevel(4);
     }
 
     transcoord_TM(x, y, callback) {
@@ -61,7 +66,7 @@ class KakaoMap {
             clickable: true,
             content : iwContent,
             position : marker.getPosition(),
-            yAnchor: 1.125,
+            yAnchor: 1.2,
             zIndex: 1000
         });
 
@@ -120,6 +125,17 @@ class KakaoMap {
         return new kakao.maps.CustomOverlay({
             position: position,
             content: content
+        });
+    }
+
+    add_polyline(poslst = [new kakao.maps.LatLng(35.2, 126.9), new kakao.maps.LatLng(35.3, 127.0)]) {
+        return new kakao.maps.Polyline({
+            map: this.map, // 선을 표시할 지도입니다 
+            path: poslst, // 선을 구성하는 좌표 배열입니다 클릭한 위치를 넣어줍니다
+            strokeWeight: 3, // 선의 두께입니다 
+            strokeColor: '#db4040', // 선의 색깔입니다
+            strokeOpacity: 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+            strokeStyle: 'solid' // 선의 스타일입니다
         });
     }
 }

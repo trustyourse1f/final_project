@@ -10,6 +10,7 @@ import axios from 'axios';
 
 function MapArticle(props) {
     const [kmap, setKmap] = useState(null);
+    const [polyline, setPolyline] = useState(null);
     const hospitals_info = useSelector(state => state.hospitals.value);
     const dispatch = useDispatch();
 
@@ -34,7 +35,7 @@ function MapArticle(props) {
                 let mk = tmp_map.add_marker(res.data[i].latitude, res.data[i].longitude, true, mkimg);
                 mk_lst.push(mk);
 
-                tmp_map.deploymarker(mk);
+                tmp_map.deploymarker(mk, false);
 
                 let additional_info = [];
                 if(res.data[i].isBeautyParlor) {
@@ -79,7 +80,9 @@ function MapArticle(props) {
                                         <div>${res.data[i].name}</div>
                                         <div>병원: ${res.data[i].total}</div>
                                         <div>24시: ${res.data[i].Is24}</div></div>`;
-                    gumarker_lst.push(tmp_map.add_customOverlay(res.data[i].latitude, res.data[i].longitude, gumarker_content));
+                    let tmpgu = tmp_map.add_customOverlay(res.data[i].latitude, res.data[i].longitude, gumarker_content)
+                    gumarker_lst.push(tmpgu);
+                    tmp_map.deploymarker(tmpgu, true);
                 }
 
                 let zoomcbk = (lvl) => {
@@ -113,9 +116,18 @@ function MapArticle(props) {
     }, []);
 
     function nearestHospital() {
-        getGeoPosition((lat, lng) => {findNearestHospital(lat, lng).then(res => {
-            kmap.setCenter(res.data.latitude, res.data.longitude);
-        })})
+        if(polyline === null){
+            getGeoPosition((lat, lng) => {findNearestHospital(lat, lng).then(res => {
+                kmap.setCenter(res.data.latitude, res.data.longitude);
+                let tmp_pl = kmap.add_polyline([kmap.create_LatLng(lat, lng),
+                    kmap.create_LatLng(res.data.latitude, res.data.longitude)]);
+                kmap.deploymarker(tmp_pl, true);
+                setPolyline(tmp_pl);
+            })});
+        } else {
+            kmap.deploymarker(polyline, false);
+            setPolyline(null);
+        }
     }
         
     return (
