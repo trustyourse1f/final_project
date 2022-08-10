@@ -51,7 +51,7 @@ function ReservationHost(props) {
                         </tr>
                         {tabledata.reservations.map((val, ind) => {
                             return (<tr key={`${ind}`}>
-                                <td>{moment(new Date(val.Time)).format('YYYY.MM.DD h:mm')}</td>
+                                <td>{moment(new Date(val.Time)).format('YYYY.MM.DD HH:mm')}</td>
                                 <td>{val.Customer_name}</td>
                                 <td>{val.Customer_number}</td>
                                 <td>{val.AnimalType}</td>
