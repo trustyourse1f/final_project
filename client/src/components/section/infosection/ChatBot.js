@@ -111,7 +111,7 @@ function ChatBot(props) {
         })
     } else if(chatPhase==2) {
         document.querySelector('.system-btn-table :nth-child(2)').disabled = false;
-        chatlog.push(<div className='botmessage'>증상을 선택해주세요
+        chatlog.push(<div className='botmessage'>증상을 선택해주세요<br/>
                         {'(선택한 증상이 많을수록 더 정확한 진단이 가능합니다.)'}</div>);
         get_symptoms().then(res => {
             chatlog.push(<div className="botmessage choice-container">

@@ -123,6 +123,7 @@ function MapArticle(props) {
                     kmap.create_LatLng(res.data.latitude, res.data.longitude)]);
                 kmap.deploymarker(tmp_pl, true);
                 setPolyline(tmp_pl);
+                window.alert(`${res.data.ditance.toFixed(2)}km 거리에 가장 가까운 응급 병원이 있습니다.`);
             })});
         } else {
             kmap.deploymarker(polyline, false);
