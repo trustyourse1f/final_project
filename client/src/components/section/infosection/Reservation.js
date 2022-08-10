@@ -30,6 +30,7 @@ function Reservation(props) {
     });
     const [reservationTable, setReservationTable] = useState([]);
     const [timeSelectionBtns, setTimeSelectionBtns] = useState([]);
+    const [timeBtnPushed, setTimeBtnPushed] = useState(false);
 
     useEffect(() => {
         get_buisnesshour(props.HospitalID, setBsnsHour);
@@ -103,6 +104,7 @@ function Reservation(props) {
                     });
                     e.target.style.backgroundColor = '#0095df';
                     e.target.style.color = 'white';
+                    setTimeBtnPushed(true);
                 }
                 timeSelectionBtns.push(<div><button onClick={clickbtn} className="validbtn">
                     {`${("0"+hour).slice(-2)}:${("0"+minute).slice(-2)}`}</button></div>);
@@ -115,6 +117,7 @@ function Reservation(props) {
         document.querySelectorAll('.time-selection button').forEach(function(item) {
             item.removeAttribute("style");
         });
+        setTimeBtnPushed(false);
     }, [timeSelectionBtns]);
     
     return (
@@ -175,7 +178,9 @@ function Reservation(props) {
                         </div>
                     </div>
                     <button onClick={(e) => {
-                        if(postData.Customer_number.length < 7) {
+                        if(!timeBtnPushed) {
+                            window.alert("시간을 선택해 주세요");
+                        } else if(postData.Customer_number.length < 7) {
                             window.alert("전화번호를 입력해주세요")
                         } else {
                             post_reservation(postData).then(res => {
