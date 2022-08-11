@@ -25,7 +25,7 @@ function AboutUs(props) {
                     <div><span>심재용</span></div>
                     <img src="/Images/dr_puppy1.jpg"/>
                 </div>
-                <div className="crew">
+                <div className="crew" onClick={e => {e.currentTarget.lastChild.src="/Images/horror0.jpg"}}>
                     <div><span>이진우</span></div>
                     <img src="/Images/dr_cat1.jpg"/>
                 </div>

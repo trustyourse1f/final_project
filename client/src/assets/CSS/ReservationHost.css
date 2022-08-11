@@ -19,3 +19,14 @@
 #reserve-table > table th {
     border: 1px solid black;
 }
+
+#reserve-table > table th {
+    background-color: lightgray;
+}
+
+#reserve-table > table td,
+#reserve-table > table th {
+    min-width: 60px;
+    max-width: 360px;
+    word-break: break-all;
+}

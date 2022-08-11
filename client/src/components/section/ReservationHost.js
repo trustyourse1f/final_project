@@ -8,17 +8,25 @@ function ReservationHost(props) {
                                                     name: '',
                                                     reservations: []
     });
+    const [showtable, setShowtable] = useState({
+        name: '',
+        reservations: []
+    });
 
     useEffect(() => {
-        if (tabledata.length > 0) {
-            tabledata.reservations.sort((a, b) => {
-                if(a.Time < b.Time) {
-                    return -1
-                } else if(a.Time > b.Time) {
-                    return 1
-                }
-                return 0
-            });
+        if (tabledata.reservations.length > 0) {
+            let a = {
+                name: tabledata.name,
+                reservations: tabledata.reservations.sort((a, b) => {
+                    if(a.Time < b.Time) {
+                        return -1
+                    } else if(a.Time > b.Time) {
+                        return 1
+                    }
+                    return 0
+                })
+            };
+            setShowtable(a);
         }
     }, [tabledata]);
 
@@ -36,10 +44,10 @@ function ReservationHost(props) {
                     병원에 부여된 병원 아이디를 입력하고 예약 현황을 확인하세요.
                 </div>
                 <div id="reserve-input">
-                    <input type="text" onKeyDown={searchhid}/>
+                    <input type="text" onKeyDown={searchhid} placeholder="병원 ID"/>
                 </div>
                 <div id="reserve-table">
-                    <h1>{tabledata.name}</h1>
+                    <h1>{showtable.name}</h1>
                     <table>
                         <tr>
                             <th>시간</th>
@@ -49,7 +57,7 @@ function ReservationHost(props) {
                             <th>증상</th>
                             <th>추가사항</th>
                         </tr>
-                        {tabledata.reservations.map((val, ind) => {
+                        {showtable.reservations.map((val, ind) => {
                             return (<tr key={`${ind}`}>
                                 <td>{moment(new Date(val.Time)).format('YYYY.MM.DD HH:mm')}</td>
                                 <td>{val.Customer_name}</td>
